@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const path = require('path')
+const path = require('node:path')
 const chokidar = require('chokidar')
 const bodyParser = require('body-parser')
 const chalk = require('chalk')
@@ -8,7 +8,7 @@ const Mock = require('mockjs')
 const mockDir = path.join(process.cwd(), 'mock')
 
 // for mock server
-const responseFake = (url, type, respond) => {
+function responseFake(url, type, respond) {
   return {
     url: new RegExp(`${process.env.VUE_APP_BASE_API}${url}`),
     type: type || 'get',

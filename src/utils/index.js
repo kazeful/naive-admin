@@ -2,7 +2,7 @@
 import { isArray, isPlainObject, isString, omitBy } from 'lodash-es'
 import { isEmpty } from '@/utils/is'
 
-export const filterEmpty = (val, fn = isEmpty) => {
+export function filterEmpty(val, fn = isEmpty) {
   if (isArray(val))
     return val.filter(fn)
   if (isPlainObject(val))
@@ -23,7 +23,7 @@ export function reverse(source) {
   }
 }
 
-export const errorCapture = async (asyncFunc) => {
+export async function errorCapture(asyncFunc) {
   try {
     const res = await asyncFunc()
     return [null, res]

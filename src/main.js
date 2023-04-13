@@ -13,6 +13,7 @@ import '@/router/permission' // permission control
 
 import components from '@/components' // global components
 import directives from '@/directives' // global directives
+
 Vue.use(ElementUI).use(components).use(directives)
 
 if (process.env.NODE_ENV === 'production') {

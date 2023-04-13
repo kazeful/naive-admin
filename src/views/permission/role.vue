@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import path from 'path'
+import path from 'node:path'
 import { cloneDeep } from 'lodash-es'
 import { addRole, deleteRole, getRoles, getRoutes, updateRole } from '@/api/role'
 

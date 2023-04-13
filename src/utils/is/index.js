@@ -19,7 +19,9 @@ export const isClient = !isServer
 
 export const isBrowser = !isServer
 
-export const isDef = val => !isUnDef(val)
+export function isDef(val) {
+  return !isUnDef(val)
+}
 
 export const toString = Object.prototype.toString
 
