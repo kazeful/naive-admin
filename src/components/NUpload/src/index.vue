@@ -1,3 +1,107 @@
+<template>
+  <div class="w-125" bg="white">
+    <input
+      ref="fileInput"
+      class="hidden"
+      type="file"
+      :accept="realAccept"
+      :multiple="multiple"
+      @change="handleFileChange"
+    >
+    <div
+      v-if="!files.length"
+      class="h-52"
+      flex="~"
+      border="1 dashed rounded"
+      bg="hex-fafafa"
+      :style="{ 'border-color': dragOver ? '#2d8cf0' : '#dddddd' }"
+      @dragover.prevent="dragOver = true"
+      @dragleave.prevent="dragOver = false"
+      @drop.prevent="handleDrop"
+    >
+      <div class="m-auto" flex="~ col" items="center" space="y-2">
+        <img class="w-9" src="@/assets/images/empty.png" alt="" srcset="">
+        <button
+          p="y-2 x-4"
+          font="400" text="14px hex-666666"
+          border="1 solid hex-dddddd rounded"
+          cursor="pointer"
+          @click="$refs.fileInput.click()"
+        >
+          选择文件
+        </button>
+        <p font="400 leading-22px" text="14px hex-999999">
+          选择文件或拖放到虚线框内上传，支持拖拽文件夹
+        </p>
+        <p font="400 leading-22px" text="14px hex-999999">
+          支持格式：{{ accept }}
+        </p>
+      </div>
+    </div>
+    <div
+      v-else
+      border="1 dashed rounded"
+      bg="hex-fafafa"
+      :style="{ 'border-color': dragOver ? '#2d8cf0' : '#dddddd' }"
+      @dragover.prevent="dragOver = true"
+      @dragleave.prevent="dragOver = false"
+      @drop.prevent="handleDrop"
+    >
+      <div
+        class="min-h-166px"
+        flex="~ col"
+        p="y-4 x-8"
+        divide="y-1 hex-dddddd"
+      >
+        <div
+          v-for="file, index in files"
+          :key="file.id"
+          flex="~" justify="between" items="center"
+          p="y-2"
+        >
+          <div
+            flex="~" space="x-2"
+            font="400 leading-7" text="14px hex-333333"
+          >
+            <img class="h-7" :src="pathMap[file.type]" alt="" set="">
+            <span>{{ file.name }}</span>
+            <span>{{ formatSize(file.size) }}</span>
+          </div>
+          <img
+            class="h-5"
+            cursor="pointer"
+            src="@/assets/images/delete.png" alt="" srcset=""
+            @click="handleDelete(index)"
+          >
+        </div>
+      </div>
+      <p
+        v-if="multiple"
+        font="400 leading-10"
+        text="14px center hex-999999"
+        bg="hex-f4f4f4"
+        cursor="pointer"
+      >
+        <span class="underline" text="hex-418e80" @click="$refs.fileInput.click()">添加文件</span>
+        <span>支持格式：{{ accept }}</span>
+      </p>
+    </div>
+    <div flex="~" justify="end" space="x-2" p="y-5">
+      <button
+        p="y-2 x-4"
+        font="400" text="14px white"
+        border="1 solid hex-dddddd rounded"
+        bg="hex-418e80"
+        cursor="pointer"
+        :style="{ opacity: isUploading || !files.length ? '40%' : '100%' }"
+        @click="handleUpload"
+      >
+        {{ isUploading ? '上传中...' : '开始上传' }}
+      </button>
+    </div>
+  </div>
+</template>
+
 <script>
 import { Message } from 'element-ui'
 import { getFilesAsync } from './helper'
@@ -143,110 +247,3 @@ export default {
   },
 }
 </script>
-
-<template>
-  <div class="w-125 bg-white">
-    <input
-      ref="fileInput"
-      class="hidden"
-      type="file"
-      :accept="realAccept"
-      :multiple="multiple"
-      @change="handleFileChange"
-    >
-    <div
-      v-if="!files.length"
-      class="h-52"
-      flex="~"
-      border="1 dashed rounded"
-      bg="hex-fafafa"
-      :style="{ 'border-color': dragOver ? '#2d8cf0' : '#dddddd' }"
-      @dragover.prevent="dragOver = true"
-      @dragleave.prevent="dragOver = false"
-      @drop.prevent="handleDrop"
-    >
-      <div class="m-auto" flex="~ col" items="center" space="y-2">
-        <img class="w-37px" src="@/assets/images/empty.png" alt="" srcset="">
-        <button
-          p="y-2 x-4"
-          font="400" text="14px hex-666666"
-          border="1 solid hex-dddddd rounded"
-          cursor="pointer"
-          @click="$refs.fileInput.click()"
-        >
-          选择文件
-        </button>
-        <p font="400 leading-22px" text="14px hex-999999">
-          选择文件或拖放到虚线框内上传，支持拖拽文件夹
-        </p>
-        <p font="400 leading-22px" text="14px hex-999999">
-          支持格式：{{ accept }}
-        </p>
-      </div>
-    </div>
-    <div
-      v-else
-      border="1 dashed rounded"
-      bg="hex-fafafa"
-      :style="{ 'border-color': dragOver ? '#2d8cf0' : '#dddddd' }"
-      @dragover.prevent="dragOver = true"
-      @dragleave.prevent="dragOver = false"
-      @drop.prevent="handleDrop"
-    >
-      <div class="min-h-166px" flex="~ col" p="y-4 x-8" divide="y-1 hex-dddddd">
-        <div
-          v-for="file, index in files"
-          :key="file.id"
-          flex="~" justify="between" items="center"
-          p="y-2"
-        >
-          <div
-            flex="~" space="x-2"
-            font="400 leading-7" text="14px hex-333333"
-          >
-            <img class="h-7" :src="pathMap[file.type]" alt="" set="">
-            <span>{{ file.name }}</span>
-            <span>{{ formatSize(file.size) }}</span>
-          </div>
-          <img
-            class="h-5"
-            cursor="pointer"
-            src="@/assets/images/delete.png" alt="" srcset=""
-            @click="handleDelete(index)"
-          >
-        </div>
-      </div>
-      <p
-        v-if="multiple"
-        font="400 leading-10"
-        text="14px center hex-999999"
-        bg="hex-f4f4f4"
-        cursor="pointer"
-      >
-        <span class="underline" text="hex-418e80" @click="$refs.fileInput.click()">添加文件</span>
-        <span>支持格式：{{ accept }}</span>
-      </p>
-    </div>
-    <div flex="~" justify="end" space="x-2" p="y-5">
-      <button
-        p="y-2 x-4"
-        font="400" text="14px hex-666666"
-        border="1 solid hex-dddddd rounded"
-        cursor="pointer"
-      >
-        取消
-      </button>
-      <button
-        p="y-2 x-4"
-        font="400" text="14px white"
-        border="1 solid hex-dddddd rounded"
-        bg="hex-418e80"
-        cursor="pointer"
-        :style="{ opacity: isUploading || !files.length ? '40%' : '100%' }"
-        @click="handleUpload"
-      >
-        {{ isUploading ? '上传中...' : '开始上传' }}
-      </button>
-    </div>
-  </div>
-</template>
