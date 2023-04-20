@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import path from 'node:path'
+import path from 'path'
 import ScrollPane from './components/ScrollPane.vue'
 
 export default {

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const path = require('node:path')
+const path = require('path')
 const chokidar = require('chokidar')
 const bodyParser = require('body-parser')
 const chalk = require('chalk')

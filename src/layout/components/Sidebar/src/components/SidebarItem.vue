@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import path from 'node:path'
+import path from 'path'
 import Item from './Item.vue'
 import AppLink from './Link.vue'
 import { isExternal } from '@/utils/is'
