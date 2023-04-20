@@ -1,4 +1,5 @@
 <script>
+import { Message } from 'element-ui'
 import { getFilesAsync } from './helper'
 
 import doc from '@/assets/images/doc.png'
@@ -74,11 +75,11 @@ export default {
       const filteredFiles = files.filter((file) => {
         const extension = file.name.split('.').pop().toLowerCase()
         if (!this.acceptList.includes(extension)) {
-          alert(`不支持上传${extension}文件`)
+          Message.warning(`不支持上传${extension}文件`)
           return false
         }
         if (file.size > this.maxSize) {
-          alert(`${file.name}文件大小超过限制`)
+          Message.warning(`${file.name}文件大小超过限制`)
           return false
         }
         return true
@@ -94,7 +95,7 @@ export default {
       })
       if (this.files.length + processedFiles.length > this.maxQuantity) {
         this.files.push(...processedFiles.slice(0, this.maxQuantity - this.files.length))
-        alert('文件数量超过限制')
+        Message.warning('文件数量超过限制')
       }
       else {
         this.files.push(...processedFiles)
@@ -122,7 +123,7 @@ export default {
           this.files.splice(this.files.findIndex(item => item.id === cloneItem.id), 1)
         }
         catch {
-          alert(`${cloneItem.name}上传出错，请稍后再试`)
+          Message.error(`${cloneItem.name}上传出错，请稍后再试`)
         }
       }
     },
