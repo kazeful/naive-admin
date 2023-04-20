@@ -1,11 +1,15 @@
 <script>
-import FileIcon from './FileIcon.vue'
 import { getFilesAsync } from './helper'
 
+import doc from '@/assets/images/doc.png'
+import xls from '@/assets/images/xls.png'
+import jpg from '@/assets/images/jpg.png'
+import png from '@/assets/images/png.png'
+import pdf from '@/assets/images/pdf.png'
+import rar from '@/assets/images/rar.png'
+import zip from '@/assets/images/zip.png'
+
 export default {
-  components: {
-    FileIcon,
-  },
   props: {
     accept: {
       type: String,
@@ -29,12 +33,20 @@ export default {
       dragOver: false,
       files: [],
       isUploading: false,
+      pathMap: {
+        doc,
+        docx: doc,
+        xls,
+        xlsx: xls,
+        jpg,
+        png,
+        pdf,
+        rar,
+        zip,
+      },
     }
   },
   computed: {
-    isChrome() {
-      return navigator.userAgent.includes('Chrome')
-    },
     acceptList() {
       return this.accept.split(',')
     },
@@ -53,9 +65,6 @@ export default {
       const files = Array.from(e.target.files)
       this.handleFiles(files)
       this.$refs.fileInput.value = ''
-
-      if (this.isChrome)
-        this.$refs.directoryInput.value = ''
     },
     async handleFiles(files, isDragDrop = false) {
       // 拖放文件支持文件夹 自动读取文件夹内的文件
@@ -144,16 +153,6 @@ export default {
       :multiple="multiple"
       @change="handleFileChange"
     >
-    <input
-      v-if="isChrome"
-      ref="directoryInput"
-      class="hidden"
-      type="file"
-      webkitdirectory
-      :accept="realAccept"
-      :multiple="multiple"
-      @change="handleFileChange"
-    >
     <div
       v-if="!files.length"
       class="h-52"
@@ -167,29 +166,17 @@ export default {
     >
       <div class="m-auto" flex="~ col" items="center" space="y-2">
         <img class="w-37px" src="@/assets/images/empty.png" alt="" srcset="">
-        <div space="x-2">
-          <button
-            p="y-2 x-4"
-            font="400" text="14px hex-666666"
-            border="1 solid hex-dddddd rounded"
-            cursor="pointer"
-            @click="$refs.fileInput.click()"
-          >
-            选择文件
-          </button>
-          <button
-            v-if="isChrome"
-            p="y-2 x-4"
-            font="400" text="14px hex-666666"
-            border="1 solid hex-dddddd rounded"
-            cursor="pointer"
-            @click="$refs.directoryInput.click()"
-          >
-            选择文件夹
-          </button>
-        </div>
+        <button
+          p="y-2 x-4"
+          font="400" text="14px hex-666666"
+          border="1 solid hex-dddddd rounded"
+          cursor="pointer"
+          @click="$refs.fileInput.click()"
+        >
+          选择文件
+        </button>
         <p font="400 leading-22px" text="14px hex-999999">
-          选择文件或拖放到虚线框内上传，{{ isChrome ? '支持选择文件夹' : '' }}
+          选择文件或拖放到虚线框内上传，支持拖拽文件夹
         </p>
         <p font="400 leading-22px" text="14px hex-999999">
           支持格式：{{ accept }}
@@ -216,7 +203,7 @@ export default {
             flex="~" space="x-2"
             font="400 leading-7" text="14px hex-333333"
           >
-            <FileIcon class="h-7" :type="file.type" />
+            <img class="h-7" :src="pathMap[file.type]" alt="" set="">
             <span>{{ file.name }}</span>
             <span>{{ formatSize(file.size) }}</span>
           </div>
