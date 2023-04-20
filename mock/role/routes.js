@@ -193,19 +193,6 @@ const asyncRoutes = [
   },
 
   {
-    path: '/echarts',
-    component: 'layout/Layout',
-    children: [
-      {
-        path: 'index',
-        name: 'Echarts',
-        component: 'views/echarts/index',
-        meta: { title: 'Echarts', icon: 'el-icon-s-data' },
-      },
-    ],
-  },
-
-  {
     path: '/download',
     component: 'layout/Layout',
     children: [
@@ -219,14 +206,14 @@ const asyncRoutes = [
   },
 
   {
-    path: '/directives',
+    path: '/upload',
     component: 'layout/Layout',
     children: [
       {
         path: 'index',
-        name: 'Directives',
-        component: 'views/directives/index',
-        meta: { title: 'Directives', icon: 'el-icon-data-analysis' },
+        name: 'Upload',
+        component: 'views/upload/index',
+        meta: { title: 'Upload', icon: 'el-icon-upload2' },
       },
     ],
   },

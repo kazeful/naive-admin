@@ -1,0 +1,264 @@
+<script>
+import FileIcon from './FileIcon.vue'
+import { getFilesAsync } from './helper'
+
+export default {
+  components: {
+    FileIcon,
+  },
+  props: {
+    accept: {
+      type: String,
+      default: 'doc,docx,xls,xlsx,jpg,png,pdf,rar,zip',
+    },
+    multiple: {
+      type: Boolean,
+      default: true,
+    },
+    maxSize: {
+      type: Number,
+      default: 5 * 1024 * 1024,
+    },
+    maxQuantity: {
+      type: Number,
+      default: 3,
+    },
+  },
+  data() {
+    return {
+      dragOver: false,
+      files: [],
+      isUploading: false,
+    }
+  },
+  computed: {
+    isChrome() {
+      return navigator.userAgent.includes('Chrome')
+    },
+    acceptList() {
+      return this.accept.split(',')
+    },
+    realAccept() {
+      return this.acceptList.join(',.')
+    },
+  },
+  methods: {
+    handleDrop(e) {
+      this.dragOver = false
+      // const files = Array.from(e.dataTransfer.files)
+      const files = Array.from(e.dataTransfer.items)
+      this.handleFiles(files, true)
+    },
+    handleFileChange(e) {
+      const files = Array.from(e.target.files)
+      this.handleFiles(files)
+      this.$refs.fileInput.value = ''
+
+      if (this.isChrome)
+        this.$refs.directoryInput.value = ''
+    },
+    async handleFiles(files, isDragDrop = false) {
+      // 拖放文件支持文件夹 自动读取文件夹内的文件
+      if (isDragDrop)
+        files = await getFilesAsync(files)
+
+      const filteredFiles = files.filter((file) => {
+        const extension = file.name.split('.').pop().toLowerCase()
+        if (!this.acceptList.includes(extension)) {
+          alert(`不支持上传${extension}文件`)
+          return false
+        }
+        if (file.size > this.maxSize) {
+          alert(`${file.name}文件大小超过限制`)
+          return false
+        }
+        return true
+      })
+      const processedFiles = filteredFiles.map((file) => {
+        return {
+          id: Date.now() + Math.random(),
+          name: file.name,
+          size: file.size,
+          type: file.name.split('.').pop(),
+          file,
+        }
+      })
+      if (this.files.length + processedFiles.length > this.maxQuantity) {
+        this.files.push(...processedFiles.slice(0, this.maxQuantity - this.files.length))
+        alert('文件数量超过限制')
+      }
+      else {
+        this.files.push(...processedFiles)
+      }
+    },
+    handleDelete(index) {
+      this.files.splice(index, 1)
+    },
+    async handleUpload() {
+      if (this.isUploading || !this.files.length)
+        return
+      this.isUploading = true
+      await this.uploadFiles()
+      this.isUploading = false
+      // this.files = []
+    },
+    async uploadFiles() {
+      // 模拟请求
+      const sleep = delay => new Promise(resolve => setTimeout(resolve, delay))
+      const cloneFiles = this.files.slice()
+      for (let i = 0; i < cloneFiles.length; i++) {
+        const cloneItem = cloneFiles[i]
+        try {
+          await sleep((i + 1) * 500)
+          this.files.splice(this.files.findIndex(item => item.id === cloneItem.id), 1)
+        }
+        catch {
+          alert(`${cloneItem.name}上传出错，请稍后再试`)
+        }
+      }
+    },
+    clearFiles() {
+      this.files = []
+    },
+    formatSize(size) {
+      if (size < 1024)
+        return `${size}B`
+
+      else if (size < 1024 * 1024)
+        return `${Math.round(size / 1024)}KB`
+
+      else
+        return `${Math.round(size / (1024 * 1024))}MB`
+    },
+  },
+}
+</script>
+
+<template>
+  <div class="w-125 bg-white">
+    <input
+      ref="fileInput"
+      class="hidden"
+      type="file"
+      :accept="realAccept"
+      :multiple="multiple"
+      @change="handleFileChange"
+    >
+    <input
+      v-if="isChrome"
+      ref="directoryInput"
+      class="hidden"
+      type="file"
+      webkitdirectory
+      :accept="realAccept"
+      :multiple="multiple"
+      @change="handleFileChange"
+    >
+    <div
+      v-if="!files.length"
+      class="h-52"
+      flex="~"
+      border="1 dashed rounded"
+      bg="hex-fafafa"
+      :style="{ 'border-color': dragOver ? '#2d8cf0' : '#dddddd' }"
+      @dragover.prevent="dragOver = true"
+      @dragleave.prevent="dragOver = false"
+      @drop.prevent="handleDrop"
+    >
+      <div class="m-auto" flex="~ col" items="center" space="y-2">
+        <img class="w-37px" src="@/assets/images/empty.png" alt="" srcset="">
+        <div space="x-2">
+          <button
+            p="y-2 x-4"
+            font="400" text="14px hex-666666"
+            border="1 solid hex-dddddd rounded"
+            cursor="pointer"
+            @click="$refs.fileInput.click()"
+          >
+            选择文件
+          </button>
+          <button
+            v-if="isChrome"
+            p="y-2 x-4"
+            font="400" text="14px hex-666666"
+            border="1 solid hex-dddddd rounded"
+            cursor="pointer"
+            @click="$refs.directoryInput.click()"
+          >
+            选择文件夹
+          </button>
+        </div>
+        <p font="400 leading-22px" text="14px hex-999999">
+          选择文件或拖放到虚线框内上传，{{ isChrome ? '支持选择文件夹' : '' }}
+        </p>
+        <p font="400 leading-22px" text="14px hex-999999">
+          支持格式：{{ accept }}
+        </p>
+      </div>
+    </div>
+    <div
+      v-else
+      border="1 dashed rounded"
+      bg="hex-fafafa"
+      :style="{ 'border-color': dragOver ? '#2d8cf0' : '#dddddd' }"
+      @dragover.prevent="dragOver = true"
+      @dragleave.prevent="dragOver = false"
+      @drop.prevent="handleDrop"
+    >
+      <div class="min-h-166px" flex="~ col" p="y-4 x-8" divide="y-1 hex-dddddd">
+        <div
+          v-for="file, index in files"
+          :key="file.id"
+          flex="~" justify="between" items="center"
+          p="y-2"
+        >
+          <div
+            flex="~" space="x-2"
+            font="400 leading-7" text="14px hex-333333"
+          >
+            <FileIcon class="h-7" :type="file.type" />
+            <span>{{ file.name }}</span>
+            <span>{{ formatSize(file.size) }}</span>
+          </div>
+          <img
+            class="h-5"
+            cursor="pointer"
+            src="@/assets/images/delete.png" alt="" srcset=""
+            @click="handleDelete(index)"
+          >
+        </div>
+      </div>
+      <p
+        v-if="multiple"
+        font="400 leading-10"
+        text="14px center hex-999999"
+        bg="hex-f4f4f4"
+        cursor="pointer"
+      >
+        <span class="underline" text="hex-418e80" @click="$refs.fileInput.click()">添加文件</span>
+        <span>支持格式：{{ accept }}</span>
+      </p>
+    </div>
+    <div flex="~" justify="end" space="x-2" p="y-5">
+      <button
+        p="y-2 x-4"
+        font="400" text="14px hex-666666"
+        border="1 solid hex-dddddd rounded"
+        cursor="pointer"
+      >
+        取消
+      </button>
+      <button
+        p="y-2 x-4"
+        font="400" text="14px white"
+        border="1 solid hex-dddddd rounded"
+        bg="hex-418e80"
+        cursor="pointer"
+        :style="{ opacity: isUploading || !files.length ? '40%' : '100%' }"
+        @click="handleUpload"
+      >
+        {{ isUploading ? '上传中...' : '开始上传' }}
+      </button>
+    </div>
+  </div>
+</template>

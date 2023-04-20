@@ -242,6 +242,19 @@ export const asyncRoutes = [
     ],
   },
 
+  {
+    path: '/upload',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Upload',
+        component: () => import('#/upload/index'),
+        meta: { title: 'Upload', icon: 'el-icon-upload2' },
+      },
+    ],
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true },
 ]
