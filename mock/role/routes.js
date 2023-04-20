@@ -86,28 +86,6 @@ const asyncRoutes = [
   },
 
   {
-    path: '/example',
-    component: 'layout/Layout',
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: 'views/table/index',
-        meta: { title: 'Table', icon: 'table' },
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: 'views/tree/index',
-        meta: { title: 'Tree', icon: 'tree' },
-      },
-    ],
-  },
-
-  {
     path: '/nested',
     component: 'layout/Layout',
     redirect: '/nested/menu1',
@@ -167,6 +145,34 @@ const asyncRoutes = [
   },
 
   {
+    path: '/example',
+    component: 'layout/Layout',
+    redirect: '/example/table',
+    name: 'Example',
+    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: '/form',
+        name: 'Form',
+        component: 'views/form/index',
+        meta: { title: 'Form', icon: 'form' },
+      },
+      {
+        path: 'table',
+        name: 'Table',
+        component: 'views/table/index',
+        meta: { title: 'Table', icon: 'table' },
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: 'views/tree/index',
+        meta: { title: 'Tree', icon: 'tree' },
+      },
+    ],
+  },
+
+  {
     path: '/ellipsis',
     component: 'layout/Layout',
     children: [
@@ -175,19 +181,6 @@ const asyncRoutes = [
         name: 'Ellipsis',
         component: 'views/ellipsis/index',
         meta: { title: 'Ellipsis', icon: 'el-icon-more' },
-      },
-    ],
-  },
-
-  {
-    path: '/form',
-    component: 'layout/Layout',
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: 'views/form/index',
-        meta: { title: 'Form', icon: 'form' },
       },
     ],
   },

@@ -123,28 +123,6 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('#/table/index'),
-        meta: { title: 'Table', icon: 'table' },
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('#/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' },
-      },
-    ],
-  },
-
-  {
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
@@ -204,6 +182,34 @@ export const asyncRoutes = [
   },
 
   {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/table',
+    name: 'Example',
+    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'form',
+        name: 'Form',
+        component: () => import('#/form/index'),
+        meta: { title: 'Form', icon: 'form' },
+      },
+      {
+        path: 'table',
+        name: 'Table',
+        component: () => import('#/table/index'),
+        meta: { title: 'Table', icon: 'table' },
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('#/tree/index'),
+        meta: { title: 'Tree', icon: 'tree' },
+      },
+    ],
+  },
+
+  {
     path: '/ellipsis',
     component: Layout,
     children: [
@@ -212,19 +218,6 @@ export const asyncRoutes = [
         name: 'Ellipsis',
         component: () => import('#/ellipsis/index'),
         meta: { title: 'Ellipsis', icon: 'el-icon-more' },
-      },
-    ],
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('#/form/index'),
-        meta: { title: 'Form', icon: 'form' },
       },
     ],
   },
