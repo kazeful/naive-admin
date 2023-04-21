@@ -1,3 +1,6 @@
-import Form from './src/NForm.vue'
+import NForm from './NForm.vue'
+import NFormItem from './NFormItem.vue'
 
-export default Form
+export { NForm, NFormItem }
+
+export default NForm

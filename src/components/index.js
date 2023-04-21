@@ -1,6 +1,7 @@
 import SvgIcon from './SvgIcon'
+import LazyTooltip from './LazyTooltip'
 
-const components = { SvgIcon }
+const components = { SvgIcon, LazyTooltip }
 
 export default {
   install(Vue) {

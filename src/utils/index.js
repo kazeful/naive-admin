@@ -32,3 +32,31 @@ export async function errorCapture(asyncFunc) {
     return [err, null]
   }
 }
+
+export function asyncParallelLimit(tasks, limit) {
+  return new Promise((resolve, reject) => {
+    let runningTasks = 0
+    let completedTasks = 0
+    const results = []
+
+    function runTask(task) {
+      runningTasks++
+      task().then((result) => {
+        results.push(result)
+        completedTasks++
+        runningTasks--
+
+        if (completedTasks + runningTasks === tasks.length)
+          resolve(results)
+
+        else if (runningTasks < limit)
+          runTask(tasks[completedTasks + runningTasks])
+      }).catch((error) => {
+        reject(error)
+      })
+    }
+
+    for (let i = 0; i < limit && i < tasks.length; i++)
+      runTask(tasks[i])
+  })
+}
