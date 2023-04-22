@@ -32,7 +32,7 @@ function hasEllipsis(element) {
 }
 
 export default {
-  name: 'NLazyTooltip',
+  name: 'LazyTooltip',
   inheritAttrs: false,
   props: {
     text: {

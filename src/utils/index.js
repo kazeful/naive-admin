@@ -34,29 +34,29 @@ export async function errorCapture(asyncFunc) {
 }
 
 export function asyncParallelLimit(tasks, limit) {
-  return new Promise((resolve, reject) => {
-    let runningTasks = 0
+  return new Promise((resolve) => {
     let completedTasks = 0
     const results = []
+    const queue = tasks.slice()
 
-    function runTask(task) {
-      runningTasks++
-      task().then((result) => {
-        results.push(result)
-        completedTasks++
-        runningTasks--
+    function next(result) {
+      completedTasks++
+      results.push(result)
 
-        if (completedTasks + runningTasks === tasks.length)
-          resolve(results)
+      if (completedTasks === tasks.length)
+        resolve(results)
+      else
+        runTask()
+    }
 
-        else if (runningTasks < limit)
-          runTask(tasks[completedTasks + runningTasks])
-      }).catch((error) => {
-        reject(error)
-      })
+    function runTask() {
+      if (queue.length) {
+        const task = queue.shift()
+        task().then(res => next(res), err => next(err))
+      }
     }
 
     for (let i = 0; i < limit && i < tasks.length; i++)
-      runTask(tasks[i])
+      runTask()
   })
 }

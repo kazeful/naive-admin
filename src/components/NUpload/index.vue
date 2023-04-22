@@ -25,6 +25,7 @@
           p="y-2 x-4"
           font="400" text="14px hex-666666"
           border="1 solid hex-dddddd rounded"
+          bg="white"
           cursor="pointer"
           @click="$refs.fileInput.click()"
         >
@@ -64,7 +65,7 @@
             font="400 leading-7" text="14px hex-333333"
           >
             <img class="h-7" :src="pathMap[file.type]" alt="" set="">
-            <span>{{ file.name }}</span>
+            <LazyTooltip class="max-w-75" :text="file.name" />
             <span>{{ formatSize(file.size) }}</span>
           </div>
           <img
@@ -113,6 +114,7 @@ import png from '@/assets/images/png.png'
 import pdf from '@/assets/images/pdf.png'
 import rar from '@/assets/images/rar.png'
 import zip from '@/assets/images/zip.png'
+import { asyncParallelLimit } from '@/utils'
 
 export default {
   props: {
@@ -126,7 +128,7 @@ export default {
     },
     maxSize: {
       type: Number,
-      default: 5 * 1024 * 1024,
+      default: 5,
     },
     maxQuantity: {
       type: Number,
@@ -152,6 +154,9 @@ export default {
     }
   },
   computed: {
+    realMaxSize() {
+      return this.maxSize * 1024 * 1024
+    },
     acceptList() {
       return this.accept.split(',')
     },
@@ -182,7 +187,7 @@ export default {
           Message.warning(`不支持上传${extension}文件`)
           return false
         }
-        if (file.size > this.maxSize) {
+        if (file.size > this.realMaxSize) {
           Message.warning(`${file.name}文件大小超过限制`)
           return false
         }
@@ -220,16 +225,24 @@ export default {
       // 模拟请求
       const sleep = delay => new Promise(resolve => setTimeout(resolve, delay))
       const cloneFiles = this.files.slice()
-      for (let i = 0; i < cloneFiles.length; i++) {
-        const cloneItem = cloneFiles[i]
-        try {
-          await sleep((i + 1) * 500)
-          this.files.splice(this.files.findIndex(item => item.id === cloneItem.id), 1)
-        }
-        catch {
-          Message.error(`${cloneItem.name}上传出错，请稍后再试`)
-        }
-      }
+      const tasks = cloneFiles.map((cloneItem, index) => {
+        return () => new Promise((resolve, reject) => {
+          asyncFn()
+          async function asyncFn() {
+            try {
+              const res = await sleep((index + 1) * 500)
+              this.handleDelete(this.files.findIndex(item => item.id === cloneItem.id))
+              resolve(res)
+            }
+            catch (err) {
+              Message.error(`${cloneItem.name}上传出错，请稍后再试`)
+              reject(err)
+            }
+          }
+        })
+      })
+      const results = await asyncParallelLimit(tasks, 3)
+      console.log(results)
     },
     clearFiles() {
       this.files = []
