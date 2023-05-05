@@ -41,8 +41,8 @@ export function isWindow(val) {
   return typeof isDef(window) && is(val, 'Window')
 }
 
-export function isPromise(val) {
-  return isObject(val) && is(val, 'Promise') && isFunction(val.then) && isFunction(val.catch)
+export function isPromiseLike(val) {
+  return isObject(val) && isFunction(val.then)
 }
 
 export function isJson(val) {
