@@ -7,7 +7,7 @@ const data = Mock.mock({
       'title': '@sentence(10, 20)',
       'status|1': ['published', 'draft', 'deleted'],
       'author': 'name',
-      'display_time': '@datetime',
+      'date': '@datetime',
       'pageviews': '@integer(300, 5000)',
     },
   ],

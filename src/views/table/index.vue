@@ -11,8 +11,18 @@
       :page-size.sync="pageSize"
       :total="total"
     >
-      <template #display_time="{ row }">
-        <span>{{ row.display_time }}</span>
+      <el-table-column label="标题">
+        <el-table-column
+          prop="pageviews"
+          label="浏览量"
+        />
+        <el-table-column
+          prop="id"
+          label="唯一标识"
+        />
+      </el-table-column>
+      <template #date="{ row }">
+        <span>{{ row.date }}</span>
       </template>
     </NTable>
   </div>
@@ -33,10 +43,9 @@ export default {
       columns: [
         {
           type: 'selection',
-          width: 40,
         },
         {
-          prop: 'display_time',
+          prop: 'date',
           label: '日期',
         },
         {
@@ -46,6 +55,16 @@ export default {
         {
           prop: 'title',
           label: '标题',
+          children: [
+            {
+              prop: 'pageviews',
+              label: '浏览量',
+            },
+            {
+              prop: 'id',
+              label: '唯一标识',
+            },
+          ],
         },
       ],
       loading: false,
