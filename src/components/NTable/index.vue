@@ -51,21 +51,18 @@
     >
       <slot />
 
-      <template v-for="(item, index) in tableColumns">
+      <template v-for="item in tableColumns">
         <el-table-column
           v-if="item.type === 'selection' || item.type === 'index'"
           :key="item.type"
           v-bind="item"
           :align="item.align || 'center'"
         />
-        <el-table-column v-else :key="index" v-bind="item" :align="item.align || 'center'">
-          <template v-if="$scopedSlots[`${item.prop}-header`]" #header="scope">
-            <slot :name="`${item.prop}-header`" v-bind="scope" />
+        <NestedTableColumn v-if="!item.type && item.prop" :key="item.prop" :column="item">
+          <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
+            <slot :name="slot" v-bind="scope" />
           </template>
-          <template v-if="$scopedSlots[item.prop]" #default="scope">
-            <slot :name="item.prop" v-bind="scope" />
-          </template>
-        </el-table-column>
+        </NestedTableColumn>
       </template>
 
       <template #append>
@@ -88,9 +85,11 @@
 
 <script>
 import { constant, omit } from 'lodash-es'
+import NestedTableColumn from './NestedTableColumn.vue'
 
 export default {
   name: 'NTable',
+  components: { NestedTableColumn },
   inheritAttrs: false,
   props: {
     showToolbar: {
