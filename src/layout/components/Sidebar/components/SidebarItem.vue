@@ -52,10 +52,7 @@ export default {
       type: Object,
       required: true,
     },
-    isNest: {
-      type: Boolean,
-      default: false,
-    },
+    isNest: Boolean,
     basePath: {
       type: String,
       default: '',

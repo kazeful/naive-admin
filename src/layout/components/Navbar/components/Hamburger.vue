@@ -20,10 +20,7 @@
 export default {
   name: 'Hamburger',
   props: {
-    isActive: {
-      type: Boolean,
-      default: false,
-    },
+    isActive: Boolean,
   },
   methods: {
     toggleClick() {

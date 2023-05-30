@@ -37,13 +37,10 @@ export default {
   name: 'NEllipsis',
   props: {
     lineClamp: {
-      type: [String, Number, null],
+      type: [String, Number],
       default: 1,
     },
-    expandTrigger: {
-      type: Boolean,
-      default: false,
-    },
+    expandTrigger: Boolean,
   },
   data() {
     return {

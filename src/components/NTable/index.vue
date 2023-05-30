@@ -3,9 +3,7 @@
     <!-- toolbar -->
     <div
       v-if="showToolbar"
-      flex="~"
-      justify="between"
-      align="items-center"
+      flex="~" justify="between" align="items-center"
     >
       <div>
         <slot name="toolbar-left" />
@@ -100,10 +98,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
+    loading: Boolean,
     columns: {
       type: Array,
       default: constant([]),
