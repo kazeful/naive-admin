@@ -1,16 +1,16 @@
 <template>
   <!-- input -->
   <el-input
-    v-if="formData.formType === 'input'"
-    v-model="returnFormValue[formData.code]"
+    v-if="formType === 'input'"
+    v-model="computedModel[formData.prop]"
     v-bind="realFormData"
     v-on="listeners"
   />
 
   <!-- textarea -->
   <el-input
-    v-else-if="formData.formType === 'textarea'"
-    v-model="returnFormValue[formData.code]"
+    v-else-if="formType === 'textarea'"
+    v-model="computedModel[formData.prop]"
     type="textarea"
     v-bind="realFormData"
     v-on="listeners"
@@ -18,32 +18,32 @@
 
   <!-- date -->
   <el-date-picker
-    v-else-if="formData.formType === 'date'"
-    v-model="returnFormValue[formData.code]"
+    v-else-if="formType === 'date'"
+    v-model="computedModel[formData.prop]"
     v-bind="realFormData"
     v-on="listeners"
   />
 
   <!-- select -->
   <el-select
-    v-else-if="formData.formType === 'select'"
-    v-model="returnFormValue[formData.code]"
+    v-else-if="formType === 'select'"
+    v-model="computedModel[formData.prop]"
     class="w-full"
     v-bind="realFormData"
     v-on="listeners"
   >
     <el-option
       v-for="item in formData.data"
-      :key="item[keyField]"
+      :key="item[valueField]"
       :label="item[labelField]"
-      :value="item[keyField]"
+      :value="item[valueField]"
     />
   </el-select>
 
   <!-- treeSelect -->
   <Treeselect
-    v-else-if="formData.formType === 'treeSelect'"
-    v-model="returnFormValue[formData.code]"
+    v-else-if="formType === 'treeSelect'"
+    v-model="computedModel[formData.prop]"
     font="leading-normal"
     p="y-2px"
     v-bind="realFormData"
@@ -52,31 +52,31 @@
 
   <!-- radio -->
   <el-radio-group
-    v-else-if="formData.formType === 'radio'"
-    v-model="returnFormValue[formData.code]"
+    v-else-if="formType === 'radio'"
+    v-model="computedModel[formData.prop]"
   >
-    <el-radio v-for="item in formData.data" :key="item[keyField]" :label="item[keyField]">
+    <el-radio v-for="item in formData.data" :key="item[valueField]" :label="item[valueField]">
       {{ item[labelField] }}
     </el-radio>
   </el-radio-group>
 
   <!-- checkbox -->
   <el-checkbox-group
-    v-else-if="formData.formType === 'checkbox'"
-    v-model="returnFormValue[formData.code]"
+    v-else-if="formType === 'checkbox'"
+    v-model="computedModel[formData.prop]"
   >
     <el-checkbox
       v-for="item in formData.data"
-      :key="item[keyField]"
-      :type="item.code"
-      :label="item[keyField]"
+      :key="item[valueField]"
+      :type="item.prop"
+      :label="item[valueField]"
     >
       {{ item[labelField] }}
     </el-checkbox>
   </el-checkbox-group>
 
   <!-- switch -->
-  <el-switch v-else-if="formData.formType === 'switch'" v-model="returnFormValue[formData.code]" />
+  <el-switch v-else-if="formType === 'switch'" v-model="computedModel[formData.prop]" />
 </template>
 
 <script>
@@ -94,7 +94,7 @@ export default {
       type: Object,
       required: true,
     },
-    formValue: {
+    model: {
       type: Object,
       required: true,
     },
@@ -102,20 +102,23 @@ export default {
       type: String,
       default: 'label',
     },
-    keyField: {
+    valueField: {
       type: String,
       default: 'value',
     },
   },
   computed: {
-    returnFormValue() {
-      return this.formValue
+    computedModel() {
+      return this.model
     },
     realFormData() {
       return omitBy(this.formData, (_, key) => startsWith(key, 'on'))
     },
     listeners() {
       return pickBy(this.formData, (_, key) => startsWith(key, 'on'))
+    },
+    formType() {
+      return this.formData.formType
     },
   },
 }

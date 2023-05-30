@@ -1,12 +1,12 @@
 const formData = [
   {
-    code: 'input',
-    formLabel: '输入框',
+    prop: 'input',
+    label: '输入框',
     formType: 'input',
   },
   {
-    code: 'select',
-    formLabel: '下拉框',
+    prop: 'select',
+    label: '下拉框',
     formType: 'select',
     data: [
       {
@@ -21,18 +21,18 @@ const formData = [
     clearable: true,
   },
   {
-    code: 'customLabel',
-    formLabel: '自定义标签',
+    prop: 'customLabel',
+    label: '自定义标签',
     formType: 'input',
   },
   {
-    code: 'customForm',
-    formLabel: '自定义表单',
+    prop: 'customForm',
+    label: '自定义表单',
     formType: 'input',
   },
   {
-    code: 'radio',
-    formLabel: '单选框',
+    prop: 'radio',
+    label: '单选框',
     formType: 'radio',
     data: [
       {
@@ -46,8 +46,8 @@ const formData = [
     ],
   },
   {
-    code: 'checkbox',
-    formLabel: '多选框',
+    prop: 'checkbox',
+    label: '多选框',
     formType: 'checkbox',
     data: [
       {
@@ -61,9 +61,9 @@ const formData = [
     ],
   },
   {
-    code: 'treeSelect',
+    prop: 'treeSelect',
     formType: 'treeSelect',
-    formLabel: 'treeSelect',
+    label: 'treeSelect',
     multiple: true,
     options: [
       {
@@ -91,13 +91,13 @@ const formData = [
     ],
   },
   {
-    code: 'switch',
+    prop: 'switch',
     formType: 'switch',
-    formLabel: '开关',
+    label: '开关',
   },
   {
-    code: 'textarea',
-    formLabel: '文本域',
+    prop: 'textarea',
+    label: '文本域',
     formType: 'textarea',
     span: 24,
   },

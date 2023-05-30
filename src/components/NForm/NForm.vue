@@ -1,28 +1,18 @@
 <template>
-  <el-form ref="ruleForm" :model="formValue" v-bind="$attrs">
+  <el-form ref="ruleForm" :model="model" :label-width="labelWidth" v-bind="$attrs" v-on="$listeners">
     <el-row>
-      <el-col v-for="(formData, index) in formDataList" :key="index" :span="formData.span || 12">
-        <el-form-item p="x-8" :prop="formData.code">
+      <el-col v-for="(formData, index) in formDataList" :key="index" :span="formData.span || 24 / columnlayout">
+        <el-form-item p="x-8" v-bind="formData">
           <template #label>
-            <slot :name="`${formData.code}_label`" :data="formData">
-              {{ formData.formLabel }}
+            <slot :name="`${formData.prop}_label`" :data="formData">
+              {{ formData.label }}
             </slot>
           </template>
           <template #default>
-            <slot :name="formData.code" :data="formData">
-              <NFormItem :form-value="returnFormValue" :form-data="formData" />
+            <slot :name="formData.prop" :data="formData">
+              <NFormItem :model="computedModel" :form-data="formData" />
             </slot>
           </template>
-        </el-form-item>
-      </el-col>
-      <el-col v-if="!footerHide" :span="24">
-        <el-form-item>
-          <el-button type="primary" @click="submitForm">
-            {{ submitText }}
-          </el-button>
-          <el-button @click="resetForm">
-            {{ resetText }}
-          </el-button>
         </el-form-item>
       </el-col>
     </el-row>
@@ -30,7 +20,6 @@
 </template>
 
 <script>
-import { isEmpty } from 'lodash-es'
 import NFormItem from './NFormItem.vue'
 
 export default {
@@ -40,53 +29,41 @@ export default {
   },
   inheritAttrs: false,
   props: {
+    // 支持的字段：span + FormItem的props + inputType对应表单的props/events + class/style
     formDataList: {
       type: Array,
       required: true,
     },
-    formValue: {
+    model: {
       type: Object,
       required: true,
     },
-    submitText: {
+    labelWidth: {
       type: String,
-      default: '提交',
+      default: '100px',
     },
-    resetText: {
-      type: String,
-      default: '重置',
-    },
-    footerHide: {
-      type: Boolean,
-      default: false,
+    columnlayout: {
+      type: Number,
+      default: 3,
     },
   },
   computed: {
-    returnFormValue() {
-      return this.formValue
+    computedModel() {
+      return this.model
     },
   },
   methods: {
-    submitForm() {
-      if (isEmpty(this.rules)) {
-        this.$emit('submit-form', null)
-      }
-      else {
-        this.$refs.ruleForm.validate((valid, error) => {
-          if (valid)
-            this.$emit('submit-form', null)
-
-          else
-            this.$emit('submit-form', error)
-        })
-      }
+    validate(...arg) {
+      this.$refs.ruleForm.validate(...arg)
     },
-    resetForm() {
+    validateField(...arg) {
+      this.$refs.ruleForm.validateField(...arg)
+    },
+    resetFields() {
       this.$refs.ruleForm.resetFields()
-      this.$emit('reset-form')
     },
-    clearValidate() {
-      this.$refs.ruleForm.clearValidate()
+    clearValidate(...arg) {
+      this.$refs.ruleForm.clearValidate(...arg)
     },
   },
 }

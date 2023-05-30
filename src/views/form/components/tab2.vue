@@ -2,10 +2,8 @@
   <div p="5">
     <NForm
       :form-data-list="formData"
-      :form-value="formValue"
+      :model="formValue"
       :rules="rules"
-      @submit-form="submitForm"
-      @reset-form="resetForm"
     >
       <template #customLabel_label>
         自定义标签
@@ -19,7 +17,6 @@
 </template>
 
 <script>
-import { isNull } from 'lodash-es'
 import { formData, formValue } from '../options/formData'
 import NForm from '@/components/NForm'
 
@@ -48,17 +45,6 @@ export default {
         ],
       },
     }
-  },
-  methods: {
-    submitForm(error) {
-      if (isNull(error)) {
-        // 校验规则通过
-      }
-      else {
-        // 未通过
-      }
-    },
-    resetForm() {},
   },
 }
 </script>
