@@ -8,7 +8,7 @@ const formData = [
     prop: 'select',
     label: '下拉框',
     formType: 'select',
-    data: [
+    dict: [
       {
         label: '区域一',
         value: '01',
@@ -34,7 +34,7 @@ const formData = [
     prop: 'radio',
     label: '单选框',
     formType: 'radio',
-    data: [
+    dict: [
       {
         label: '区域一',
         value: '01',
@@ -49,7 +49,7 @@ const formData = [
     prop: 'checkbox',
     label: '多选框',
     formType: 'checkbox',
-    data: [
+    dict: [
       {
         label: '区域一',
         value: '01',

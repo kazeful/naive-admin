@@ -3,7 +3,7 @@
   <el-input
     v-if="formType === 'input'"
     v-model="computedModel[formData.prop]"
-    v-bind="realFormData"
+    v-bind="attrs"
     v-on="listeners"
   />
 
@@ -12,7 +12,7 @@
     v-else-if="formType === 'textarea'"
     v-model="computedModel[formData.prop]"
     type="textarea"
-    v-bind="realFormData"
+    v-bind="attrs"
     v-on="listeners"
   />
 
@@ -20,7 +20,7 @@
   <el-date-picker
     v-else-if="formType === 'date'"
     v-model="computedModel[formData.prop]"
-    v-bind="realFormData"
+    v-bind="attrs"
     v-on="listeners"
   />
 
@@ -29,11 +29,11 @@
     v-else-if="formType === 'select'"
     v-model="computedModel[formData.prop]"
     class="w-full"
-    v-bind="realFormData"
+    v-bind="attrs"
     v-on="listeners"
   >
     <el-option
-      v-for="item in formData.data"
+      v-for="item in formData.dict"
       :key="item[valueField]"
       :label="item[labelField]"
       :value="item[valueField]"
@@ -46,7 +46,7 @@
     v-model="computedModel[formData.prop]"
     font="leading-normal"
     p="y-2px"
-    v-bind="realFormData"
+    v-bind="attrs"
     v-on="listeners"
   />
 
@@ -55,7 +55,7 @@
     v-else-if="formType === 'radio'"
     v-model="computedModel[formData.prop]"
   >
-    <el-radio v-for="item in formData.data" :key="item[valueField]" :label="item[valueField]">
+    <el-radio v-for="item in formData.dict" :key="item[valueField]" :label="item[valueField]">
       {{ item[labelField] }}
     </el-radio>
   </el-radio-group>
@@ -66,7 +66,7 @@
     v-model="computedModel[formData.prop]"
   >
     <el-checkbox
-      v-for="item in formData.data"
+      v-for="item in formData.dict"
       :key="item[valueField]"
       :type="item.prop"
       :label="item[valueField]"
@@ -111,8 +111,8 @@ export default {
     computedModel() {
       return this.model
     },
-    realFormData() {
-      return omitBy(this.formData, (_, key) => startsWith(key, 'on'))
+    attrs() {
+      return omitBy(this.formData, (_, key) => startsWith(key, 'on') || ['span'].includes(key))
     },
     listeners() {
       return pickBy(this.formData, (_, key) => startsWith(key, 'on'))

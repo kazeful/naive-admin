@@ -2,7 +2,7 @@
   <el-form ref="ruleForm" :model="model" :label-width="labelWidth" v-bind="$attrs" v-on="$listeners">
     <el-row>
       <el-col v-for="(formData, index) in formDataList" :key="index" :span="formData.span || 24 / columnlayout">
-        <el-form-item p="x-8" v-bind="formData">
+        <el-form-item p="x-8" v-bind="pick(formData, formItemProps)">
           <template #label>
             <slot :name="`${formData.prop}_label`" :data="formData">
               {{ formData.label }}
@@ -10,7 +10,7 @@
           </template>
           <template #default>
             <slot :name="formData.prop" :data="formData">
-              <NFormItem :model="computedModel" :form-data="formData" />
+              <NFormItem :model="computedModel" :form-data="omit(formData, formItemProps)" />
             </slot>
           </template>
         </el-form-item>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { omit, pick } from 'lodash-es'
 import NFormItem from './NFormItem.vue'
 
 export default {
@@ -47,12 +48,19 @@ export default {
       default: 3,
     },
   },
+  data() {
+    return {
+      formItemProps: ['prop', 'label', 'labelWidth', 'required', 'rules', 'error', 'showMessage', 'inlineMessage', 'size'],
+    }
+  },
   computed: {
     computedModel() {
       return this.model
     },
   },
   methods: {
+    pick,
+    omit,
     validate(...arg) {
       this.$refs.ruleForm.validate(...arg)
     },
