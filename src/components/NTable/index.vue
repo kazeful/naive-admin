@@ -49,14 +49,13 @@
     >
       <slot />
 
-      <template v-for="item in tableColumns">
+      <template v-for="column, index in tableColumns">
         <el-table-column
-          v-if="item.type === 'selection' || item.type === 'index'"
-          :key="item.type"
-          v-bind="item"
-          :align="item.align || 'center'"
+          v-if="column.type === 'selection' || column.type === 'index'"
+          :key="column.type"
+          v-bind="column" :align="column.align || 'center'"
         />
-        <NestedTableColumn v-if="!item.type && item.prop" :key="item.prop" :column="item">
+        <NestedTableColumn v-if="!column.type" :key="index" v-bind="column">
           <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
             <slot :name="slot" v-bind="scope" />
           </template>
