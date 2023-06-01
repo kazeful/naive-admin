@@ -1,5 +1,5 @@
 <template>
-  <el-table-column v-bind="$attrs" :align="column.align || 'center'">
+  <el-table-column v-bind="$attrs" :align="$attrs.align || 'center'">
     <template v-if="$scopedSlots[`${$attrs.prop}-header`]" #header="scope">
       <slot :name="`${$attrs.prop}-header`" v-bind="scope" />
     </template>
