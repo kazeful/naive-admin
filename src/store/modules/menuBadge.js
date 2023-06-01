@@ -1,4 +1,4 @@
-import { createSessionStorage } from 'naive-storage'
+import { createSessionStorage } from '@/utils/cache'
 
 const Storage = createSessionStorage()
 

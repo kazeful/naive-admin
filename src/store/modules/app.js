@@ -1,4 +1,4 @@
-import { createLocalStorage } from 'naive-storage'
+import { createLocalStorage } from '@/utils/cache'
 
 const Storage = createLocalStorage()
 
