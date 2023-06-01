@@ -25,6 +25,15 @@
         <span>{{ row.date }}</span>
       </template>
     </NTable>
+
+    <CustomTable :columns="columns" :data="data">
+      <el-table-column label="地址">
+        <el-table-column
+          prop="address"
+          label="省份"
+        />
+      </el-table-column>
+    </CustomTable>
   </div>
 </template>
 
@@ -32,10 +41,12 @@
 import { noop } from 'lodash-es'
 import { getList } from '@/api/table'
 import NTable from '@/components/NTable'
+import CustomTable from '@/components/CustomTable'
 
 export default {
   components: {
     NTable,
+    CustomTable,
   },
   data() {
     return {
