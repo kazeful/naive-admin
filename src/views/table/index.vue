@@ -4,12 +4,14 @@
       height="600"
       border
       :loading="loading"
-      :data="data"
       :columns="columns"
-      show-operation
+      :data="data"
+      row-key="id"
       :current-page.sync="currentPage"
       :page-size.sync="pageSize"
       :total="total"
+      @current-change="fetchData"
+      @selection-change="selectionChange"
     >
       <el-table-column label="标题">
         <el-table-column
@@ -25,8 +27,8 @@
         <span>{{ row.date }}</span>
       </template>
     </NTable>
-
-    <CustomTable :columns="columns" :data="data">
+    <!-- TODO: fix -->
+    <CustomTable :columns="columns" :data="data" row-key="id">
       <el-table-column label="地址">
         <el-table-column
           prop="address"
@@ -54,6 +56,7 @@ export default {
       columns: [
         {
           type: 'selection',
+          reserveSelection: true,
         },
         {
           prop: 'date',
@@ -91,9 +94,12 @@ export default {
     async fetchData() {
       this.loading = true
       const res = await getList().catch(noop)
-      this.data = res.data.items
+      this.data = res.data.items.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
       this.total = res.data.total
       this.loading = false
+    },
+    selectionChange(selection) {
+      console.log(selection)
     },
   },
 }

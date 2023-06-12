@@ -176,8 +176,10 @@ export default {
     getElTableListeners() {
       const omitListeners = [
         'update:current-page',
+        'update:currentPage',
         'current-change',
         'update:page-size',
+        'update:pageSize',
         'page-size-change',
       ]
       return omit(this.$listeners, omitListeners)
