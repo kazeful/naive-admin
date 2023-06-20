@@ -1,6 +1,5 @@
 import {
   isArray,
-  isBoolean,
   isFunction,
   isMap,
   isNil,
@@ -9,7 +8,6 @@ import {
   isPlainObject,
   isSet,
   isString,
-  isSymbol,
   isUndefined as isUnDef,
 } from 'lodash-es'
 
@@ -29,8 +27,8 @@ export function is(val, type) {
   return toString.call(val) === `[object ${type}]`
 }
 
-export function isPrimitive(val) {
-  return isString(val) || isNumber(val) || isBoolean(val) || isNil(val) || isSymbol(val)
+function isPrimitive(val) {
+  return (typeof val !== 'object' && typeof val !== 'function') || val === null
 }
 
 export function isReference(val) {
