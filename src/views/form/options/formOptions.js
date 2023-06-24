@@ -1,4 +1,4 @@
-const formData = [
+const formOptions = [
   {
     prop: 'input',
     label: '输入框',
@@ -115,4 +115,4 @@ const formValue = {
   textarea: '',
 }
 
-export { formData, formValue }
+export { formOptions, formValue }

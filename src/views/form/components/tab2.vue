@@ -1,7 +1,7 @@
 <template>
   <div p="5">
     <NForm
-      :form-data-list="formData"
+      :form-options="formOptions"
       :model="formValue"
       :rules="rules"
     >
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { formData, formValue } from '../options/formData'
+import { formOptions, formValue } from '../options/formOptions'
 import NForm from '@/components/NForm'
 
 export default {
@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      formData,
+      formOptions,
       formValue,
       rules: {
         input: [

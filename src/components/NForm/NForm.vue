@@ -1,7 +1,7 @@
 <template>
   <el-form ref="ruleForm" :model="model" :label-width="labelWidth" v-bind="$attrs" v-on="$listeners">
     <el-row>
-      <el-col v-for="(formData, index) in formDataList" :key="index" :span="formData.span || 24 / columnlayout">
+      <el-col v-for="(formData, index) in formOptions" :key="index" :span="formData.span || 24 / columnlayout">
         <el-form-item p="x-8" v-bind="formData">
           <template #label>
             <slot :name="`${formData.prop}_label`" :data="formData">
@@ -30,7 +30,7 @@ export default {
   inheritAttrs: false,
   props: {
     // 支持的字段：span + inputType + FormItem的props + inputType对应表单的props/events + class/style
-    formDataList: {
+    formOptions: {
       type: Array,
       required: true,
     },
