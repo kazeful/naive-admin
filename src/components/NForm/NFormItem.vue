@@ -120,7 +120,12 @@ export default {
       })
     },
     listeners() {
-      return pickBy(this.formData, (_, key) => startsWith(key, 'on'))
+      const listeners = Object.create(null)
+      const attrs = pickBy(this.formData, (_, key) => startsWith(key, 'on'))
+      Object.keys(attrs).forEach((key) => {
+        listeners[key.slice(2).toLocaleLowerCase()] = attrs[key]
+      })
+      return listeners
     },
     inputType() {
       return this.formData.inputType
