@@ -82,10 +82,9 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import { omitBy, pickBy, startsWith } from 'lodash-es'
 
-const formItemProps = ['prop', 'label', 'labelWidth', 'required', 'rules', 'error', 'showMessage', 'inlineMessage', 'size']
-const extraProps = ['span', 'inputType']
+import { omitBy, pickBy, startsWith } from 'lodash-es'
+import { extraProps, formItemProps } from './option'
 
 export default {
   name: 'NFormItem',
@@ -132,6 +131,17 @@ export default {
     },
     inputProp() {
       return this.formData.prop
+    },
+    inputInit() {
+      return this.formData.init
+    },
+  },
+  watch: {
+    inputType: {
+      handler() {
+        this.inputInit && this.inputInit()
+      },
+      immediate: true,
     },
   },
 }

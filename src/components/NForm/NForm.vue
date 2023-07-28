@@ -1,8 +1,8 @@
 <template>
   <el-form ref="ruleForm" :model="model" :label-width="labelWidth" v-bind="$attrs" v-on="$listeners">
     <el-row>
-      <el-col v-for="(formData, index) in formOptions" :key="index" :span="formData.span || 24 / columnlayout">
-        <el-form-item p="x-8" v-bind="formData">
+      <el-col v-for="(formData, index) in realFormDataList" :key="index" :span="formData.span || 24 / columnlayout">
+        <el-form-item p="x-8" v-bind="formItemAttrs">
           <template #label>
             <slot :name="`${formData.prop}_label`" :data="formData">
               {{ formData.label }}
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { pick } from 'lodash-es'
+import { formItemProps } from './option'
 import NFormItem from './NFormItem.vue'
 
 export default {
@@ -29,7 +31,13 @@ export default {
   },
   inheritAttrs: false,
   props: {
-    // 支持的字段：span + inputType + FormItem的props + inputType对应表单的props/events + class/style
+    /**
+     * 支持的字段
+     * show/span/inputType
+     * FormItem的props
+     * inputType对应表单的props/events
+     * class/style
+     */
     formOptions: {
       type: Array,
       required: true,
@@ -45,6 +53,14 @@ export default {
     columnlayout: {
       type: Number,
       default: 3,
+    },
+  },
+  computed: {
+    realFormDataList() {
+      return this.formDataList.filter(item => item.show !== false)
+    },
+    formItemAttrs() {
+      return pick(this.formData, formItemProps)
     },
   },
   methods: {
