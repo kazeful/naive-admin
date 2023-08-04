@@ -2,7 +2,7 @@
   <el-form ref="ruleForm" :model="model" :label-width="labelWidth" v-bind="$attrs" v-on="$listeners">
     <el-row>
       <el-col v-for="(formData, index) in realFormDataList" :key="index" :span="formData.span || 24 / columnlayout">
-        <el-form-item p="x-8" v-bind="formItemAttrs">
+        <el-form-item p="x-8" v-bind="pickByFormItemProps(formData)">
           <template #label>
             <slot :name="`${formData.prop}_label`" :data="formData">
               {{ formData.label }}
@@ -59,9 +59,6 @@ export default {
     realFormDataList() {
       return this.formDataList.filter(item => item.show !== false)
     },
-    formItemAttrs() {
-      return pick(this.formData, formItemProps)
-    },
   },
   methods: {
     validate(...arg) {
@@ -75,6 +72,9 @@ export default {
     },
     clearValidate(...arg) {
       this.$refs.ruleForm.clearValidate(...arg)
+    },
+    pickByFormItemProps(formData) {
+      return pick(formData, formItemProps)
     },
   },
 }
