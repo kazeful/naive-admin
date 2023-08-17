@@ -1,6 +1,6 @@
 {
   "name": "naive-admin",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "author": "Wind",
   "scripts": {
     "build": "vue-cli-service build",
