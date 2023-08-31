@@ -1,7 +1,7 @@
 <template>
-  <el-form ref="ruleForm" :model="model" :label-width="labelWidth" v-bind="$attrs" v-on="$listeners">
+  <el-form ref="ruleForm" v-bind="omitByRowProps($attrs)" :model="model" :label-width="labelWidth" v-on="$listeners">
     <el-row>
-      <el-col v-for="(formData, index) in realFormDataList" :key="index" :span="formData.span || 24 / columnlayout">
+      <el-col v-for="(formData, index) in realFormDataList" :key="index" v-bind="pickByColProps(formData)" :span="formData.span || 24 / columnlayout">
         <el-form-item p="x-8" v-bind="pickByFormItemProps(formData)">
           <template #label>
             <slot :name="`${formData.prop}_label`" :data="formData">
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { pick } from 'lodash-es'
-import { formItemProps } from './option'
+import { omit, pick } from 'lodash-es'
+import { colProps, formItemProps, rowProps } from './option'
 import NFormItem from './NFormItem.vue'
 
 export default {
@@ -33,7 +33,8 @@ export default {
   props: {
     /**
      * 支持的字段
-     * show/span/inputType
+     * show/inputType
+     * Col的props
      * FormItem的props
      * inputType对应表单的props/events
      * class/style
@@ -72,6 +73,15 @@ export default {
     },
     clearValidate(...arg) {
       this.$refs.ruleForm.clearValidate(...arg)
+    },
+    pickByRowProps(attrs) {
+      return pick(attrs, rowProps)
+    },
+    omitByRowProps(attrs) {
+      return omit(attrs, rowProps)
+    },
+    pickByColProps(formData) {
+      return pick(formData, colProps)
     },
     pickByFormItemProps(formData) {
       return pick(formData, formItemProps)

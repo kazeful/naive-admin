@@ -92,7 +92,7 @@ import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 import { omitBy, pickBy, startsWith } from 'lodash-es'
-import { extraProps, formItemProps } from './option'
+import { colProps, extraProps, formItemProps } from './option'
 
 export default {
   name: 'NFormItem',
@@ -123,7 +123,7 @@ export default {
     },
     attrs() {
       return omitBy(this.formData, (_, key) => {
-        return startsWith(key, 'on') || [...formItemProps, ...extraProps].includes(key)
+        return startsWith(key, 'on') || [...colProps, ...formItemProps, ...extraProps].includes(key)
       })
     },
     listeners() {
