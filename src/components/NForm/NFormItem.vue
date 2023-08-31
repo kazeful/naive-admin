@@ -77,6 +77,14 @@
 
   <!-- switch -->
   <el-switch v-else-if="formType === 'switch'" v-model="computedModel[inputProp]" />
+
+  <!-- div -->
+  <div
+    v-else-if="formType === 'div'"
+    v-bind="attrs"
+    v-on="listeners"
+    v-text="computedModel[inputProp]"
+  />
 </template>
 
 <script>
