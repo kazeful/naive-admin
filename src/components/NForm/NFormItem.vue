@@ -40,9 +40,9 @@
     />
   </el-select>
 
-  <!-- treeSelect -->
+  <!-- treeselect -->
   <Treeselect
-    v-else-if="formType === 'treeSelect'"
+    v-else-if="formType === 'treeselect'"
     v-model="computedModel[inputProp]"
     font="leading-normal"
     p="y-2px"
@@ -91,8 +91,8 @@
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
-import { omitBy, pickBy, startsWith } from 'lodash-es'
-import { colProps, extraProps, formItemProps } from './option'
+import { omitBy, pickBy } from 'lodash-es'
+import { colProps, extraProps, formItemProps } from './options'
 
 export default {
   name: 'NFormItem',
@@ -100,22 +100,10 @@ export default {
     Treeselect,
   },
   props: {
-    formData: {
-      type: Object,
-      required: true,
-    },
-    model: {
-      type: Object,
-      required: true,
-    },
-    labelField: {
-      type: String,
-      default: 'label',
-    },
-    valueField: {
-      type: String,
-      default: 'value',
-    },
+    formData: Object,
+    model: Object,
+    labelField: String,
+    valueField: String,
   },
   computed: {
     computedModel() {
@@ -123,31 +111,31 @@ export default {
     },
     attrs() {
       return omitBy(this.formData, (_, key) => {
-        return startsWith(key, 'on') || [...colProps, ...formItemProps, ...extraProps].includes(key)
+        return key.startsWith('on') || [...colProps, ...formItemProps, ...extraProps].includes(key)
       })
     },
     listeners() {
       const listeners = Object.create(null)
-      const attrs = pickBy(this.formData, (_, key) => startsWith(key, 'on'))
+      const attrs = pickBy(this.formData, (_, key) => key.startsWith('on'))
       Object.keys(attrs).forEach((key) => {
         listeners[key.slice(2).toLocaleLowerCase()] = attrs[key]
       })
       return listeners
     },
-    inputType() {
-      return this.formData.inputType
+    formType() {
+      return this.formData.formType
     },
     inputProp() {
       return this.formData.prop
     },
-    inputInit() {
-      return this.formData.init
+    inputInitialize() {
+      return this.formData.initialize
     },
   },
   watch: {
-    inputType: {
+    formType: {
       handler() {
-        this.inputInit && this.inputInit()
+        this.initialize && this.initialize(this.formData)
       },
       immediate: true,
     },

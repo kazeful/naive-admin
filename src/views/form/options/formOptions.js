@@ -61,9 +61,9 @@ const formOptions = [
     ],
   },
   {
-    prop: 'treeSelect',
-    formType: 'treeSelect',
-    label: 'treeSelect',
+    prop: 'treeselect',
+    formType: 'treeselect',
+    label: 'treeselect',
     multiple: true,
     options: [
       {
@@ -96,10 +96,10 @@ const formOptions = [
     label: '开关',
   },
   {
+    span: 24,
     prop: 'textarea',
     label: '文本域',
     formType: 'textarea',
-    span: 24,
   },
 ]
 
@@ -110,7 +110,7 @@ const formValue = {
   customForm: '',
   radio: '',
   checkbox: [],
-  treeSelect: [],
+  treeselect: [],
   switch: false,
   textarea: '',
 }
