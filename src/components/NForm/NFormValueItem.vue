@@ -1,6 +1,5 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <!-- input -->
   <el-input
     v-if="formType === 'input'"
     v-model="model[formProp]"
@@ -8,7 +7,6 @@
     v-on="listeners"
   />
 
-  <!-- textarea -->
   <el-input
     v-else-if="formType === 'textarea'"
     v-model="model[formProp]"
@@ -17,7 +15,6 @@
     v-on="listeners"
   />
 
-  <!-- date -->
   <el-date-picker
     v-else-if="formType === 'date'"
     v-model="model[formProp]"
@@ -25,7 +22,6 @@
     v-on="listeners"
   />
 
-  <!-- select -->
   <el-select
     v-else-if="formType === 'select'"
     v-model="model[formProp]"
@@ -41,7 +37,6 @@
     />
   </el-select>
 
-  <!-- treeselect -->
   <Treeselect
     v-else-if="formType === 'treeselect'"
     v-model="model[formProp]"
@@ -51,7 +46,6 @@
     v-on="listeners"
   />
 
-  <!-- radio -->
   <el-radio-group
     v-else-if="formType === 'radio'"
     v-model="model[formProp]"
@@ -61,7 +55,6 @@
     </el-radio>
   </el-radio-group>
 
-  <!-- checkbox -->
   <el-checkbox-group
     v-else-if="formType === 'checkbox'"
     v-model="model[formProp]"
@@ -76,10 +69,8 @@
     </el-checkbox>
   </el-checkbox-group>
 
-  <!-- switch -->
   <el-switch v-else-if="formType === 'switch'" v-model="model[formProp]" />
 
-  <!-- div -->
   <div
     v-else-if="formType === 'div'"
     v-bind="attrs"
