@@ -8,36 +8,32 @@
     v-on="$listeners"
   >
     <el-row v-bind="pickByRowProps()" :gutter="gutter">
-      <el-col
-        v-for="(formData, index) in realFormOptions" :key="index"
-        v-bind="pickByColProps(formData)"
-        :span="formData.span || 24 / columnlayout"
-      >
-        <el-form-item v-bind="pickByFormItemProps(formData)">
-          <template #label>
-            <slot :name="`${formData.prop}_label`" :data="formData">
-              {{ formData.label }}
-            </slot>
+      <template v-for="formOption in formOptions">
+        <NFormItem
+          v-if="formOption.prop" :key="`${formOption.prop}-currentform`"
+          :form-option="formOption" :model="model" :columnlayout="columnlayout"
+        >
+          <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
+            <slot :name="slot" v-bind="scope" />
           </template>
-          <template #default>
-            <slot :name="formData.prop" :data="formData">
-              <NFormItem
-                :model="model"
-                :form-data="formData"
-                :label-field="labelField"
-                :value-field="valueField"
-              />
-            </slot>
+        </NFormItem>
+        <NFormItem
+          v-if="formOption.next" :key="`${formOption.prop}-nextform`"
+          :form-option="formOption.next(formOption, model)" :model="model" :columnlayout="columnlayout"
+        >
+          <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
+            <slot :name="slot" v-bind="scope" />
           </template>
-        </el-form-item>
-      </el-col>
+        </NFormItem>
+      </template>
+      <slot />
     </el-row>
   </el-form>
 </template>
 
 <script>
 import { pick } from 'lodash-es'
-import { colProps, formItemProps, formProps, rowProps } from './options'
+import { formProps, rowProps } from './options'
 import NFormItem from './NFormItem.vue'
 
 export default {
@@ -49,11 +45,8 @@ export default {
   props: {
     /**
      * 支持的字段
-     * show/inputType
-     * Col的props
-     * FormItem的props
-     * inputType对应表单的props/events
-     * class/style
+     * show/type/initialize/next/props(type对应表单的props/events/class/style)
+     * Col和FormItem组件的props
      */
     formOptions: {
       type: Array,
@@ -79,19 +72,23 @@ export default {
         return [1, 2, 3, 4, 6, 8, 12, 24].includes(val)
       },
     },
-    labelField: {
-      type: String,
-      default: 'label',
-    },
-    valueField: {
-      type: String,
-      default: 'value',
-    },
   },
-  computed: {
-    realFormOptions() {
-      return this.formOptions.filter(item => item.show !== false)
-    },
+  created() {
+    this.formOptions.forEach((option) => {
+      if (this.model[option.prop] === undefined) {
+        let def = ''
+        if (option.type === 'checkbox')
+          def = []
+
+        if (option.type === 'switch')
+          def = false
+
+        if (['select', 'treeselect'].includes(option.type))
+          def = option.props.multiple ? [] : ''
+
+        this.$set(this.model, option.prop, def) // For vue2
+      }
+    })
   },
   methods: {
     validate(...arg) {
@@ -111,12 +108,6 @@ export default {
     },
     pickByRowProps() {
       return pick(this.$attrs, rowProps)
-    },
-    pickByColProps(formData) {
-      return pick(formData, colProps)
-    },
-    pickByFormItemProps(formData) {
-      return pick(formData, formItemProps)
     },
   },
 }

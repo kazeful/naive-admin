@@ -44,5 +44,3 @@ export const formItemProps = [
   'inlineMessage',
   'size',
 ]
-
-export const extraProps = ['show', 'inputType', 'init']

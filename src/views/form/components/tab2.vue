@@ -2,22 +2,22 @@
   <div p="5">
     <NForm
       :form-options="formOptions"
-      :model="formValue"
+      :model="model"
       :rules="rules"
     >
       <template #customLabel_label>
         自定义标签
       </template>
       <template #customForm="{ data }">
-        <el-input v-model="formValue[data.code]" placeholder="自定义表单" />
+        <el-input v-model="model[data.prop]" placeholder="自定义表单" />
       </template>
     </NForm>
-    {{ formValue }}
+    {{ model }}
   </div>
 </template>
 
 <script>
-import { formOptions, formValue } from '../options/formOptions'
+import { formOptions, model } from '../options/formOptions'
 import NForm from '@/components/NForm'
 
 export default {
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       formOptions,
-      formValue,
+      model,
       rules: {
         input: [
           {
