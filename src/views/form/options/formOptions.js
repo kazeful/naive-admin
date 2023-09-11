@@ -109,6 +109,15 @@ const formOptions = [
         prop: 'textarea',
         label: '文本域',
         type: 'textarea',
+        next(self, model) {
+          return {
+            show: model[self.prop] === 'show', // Displays when you enter 'show'
+            span: 24,
+            prop: 'textarea2',
+            label: '文本域',
+            type: 'textarea',
+          }
+        },
       }
     },
   },

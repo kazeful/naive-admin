@@ -8,24 +8,14 @@
     v-on="$listeners"
   >
     <el-row v-bind="pickByRowProps()" :gutter="gutter">
-      <template v-for="formOption in formOptions">
-        <NFormItem
-          v-if="formOption.prop" :key="`${formOption.prop}-currentform`"
-          :form-option="formOption" :model="model" :columnlayout="columnlayout"
-        >
-          <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
-            <slot :name="slot" v-bind="scope" />
-          </template>
-        </NFormItem>
-        <NFormItem
-          v-if="formOption.next" :key="`${formOption.prop}-nextform`"
-          :form-option="formOption.next(formOption, model)" :model="model" :columnlayout="columnlayout"
-        >
-          <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
-            <slot :name="slot" v-bind="scope" />
-          </template>
-        </NFormItem>
-      </template>
+      <NFormItem
+        v-for="formOption in formOptions" :key="formOption.prop"
+        :form-option="formOption" :model="model" :columnlayout="columnlayout"
+      >
+        <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
+          <slot :name="slot" v-bind="scope" />
+        </template>
+      </NFormItem>
       <slot />
     </el-row>
   </el-form>
@@ -74,7 +64,7 @@ export default {
     },
   },
   created() {
-    this.formOptions.forEach((option) => {
+    const setDef = (option) => {
       if (this.model[option.prop] === undefined) {
         let def = ''
         if (option.type === 'checkbox')
@@ -88,6 +78,11 @@ export default {
 
         this.$set(this.model, option.prop, def) // For vue2
       }
+      if (option.next)
+        setDef(option.next(option, this.model))
+    }
+    this.formOptions.forEach((option) => {
+      setDef(option)
     })
   },
   methods: {
