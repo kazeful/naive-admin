@@ -1,7 +1,7 @@
 import { base64ToBlob, urlToBase64 } from './base64Conver'
 
 /**
- * @description: 在线Url下载 存在跨域问题时 先解决跨域
+ * @description: 下载在线图片 存在跨域问题时 先解决跨域
  */
 export function downloadByOnlineUrl(url, filename, mime, bom) {
   urlToBase64(url).then((base64) => {
