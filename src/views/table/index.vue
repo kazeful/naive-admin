@@ -27,7 +27,7 @@
         <span>{{ row.date }}</span>
       </template>
     </NTable>
-    <!-- TODO: fix -->
+    <!-- FIXME -->
     <CustomTable :columns="columns" :data="data" row-key="id">
       <el-table-column label="地址">
         <el-table-column

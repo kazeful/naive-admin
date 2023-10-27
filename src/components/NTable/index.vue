@@ -125,9 +125,9 @@ export default {
   },
   data() {
     return {
-      checkAll: false,
+      checkAll: true,
       checkedColumns: [],
-      isIndeterminate: true,
+      isIndeterminate: false,
     }
   },
   computed: {
@@ -137,11 +137,17 @@ export default {
     generalColumns() {
       return this.columns.filter(item => item.type !== 'index' && item.type !== 'selection')
     },
+    displayedGeneralColumns() {
+      return this.generalColumns.filter(item => this.checkedColumns.includes(item.label))
+    },
     generalColumnsLabel() {
       return this.generalColumns.map(item => item.label)
     },
     tableColumns() {
-      return this.specificColumns.concat(this.generalColumns.filter(item => this.checkedColumns.includes(item.label)))
+      return [
+        ...this.specificColumns,
+        ...this.displayedGeneralColumns,
+      ]
     },
   },
   watch: {
