@@ -13,3 +13,19 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background-color: var(--el-even-row-background-color, #f4f4f4);
+}
+
+.el-table th.el-table__cell, .el-table thead.is-group th.el-table__cell {
+  background-color: var(--el-header-background-color, #52cebb);
+}
+
+.el-table thead {
+  color: var(--el-header-cell-color, #fff);
+}
+
+.el-table {
+  color: var(--el-cell-color, #515a6e)
+}

@@ -55,11 +55,11 @@
           :key="column.type"
           v-bind="column" :align="column.align || 'center'"
         />
-        <NestedTableColumn v-if="!column.type" :key="index" v-bind="column">
+        <NTableColumn v-if="!column.type" :key="index" v-bind="column">
           <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
             <slot :name="slot" v-bind="scope" />
           </template>
-        </NestedTableColumn>
+        </NTableColumn>
       </template>
 
       <template #append>
@@ -82,11 +82,11 @@
 
 <script>
 import { constant, omit } from 'lodash-es'
-import NestedTableColumn from './NestedTableColumn.vue'
+import NTableColumn from './NTableColumn.vue'
 
 export default {
   name: 'NTable',
-  components: { NestedTableColumn },
+  components: { NTableColumn },
   inheritAttrs: false,
   props: {
     showToolbar: {
