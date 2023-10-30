@@ -3,7 +3,6 @@
     ref="elForm"
     v-bind="pickByFormProps()"
     :model="model"
-    :rules="rules"
     :label-width="labelWidth"
     v-on="$listeners"
   >
@@ -25,12 +24,14 @@
 import { pick } from 'lodash-es'
 import { formProps, rowProps } from './options'
 import NFormItem from './NFormItem.vue'
+import vue2 from './mixins'
 
 export default {
   name: 'NForm',
   components: {
     NFormItem,
   },
+  mixins: [vue2],
   inheritAttrs: false,
   props: {
     /**
@@ -46,7 +47,6 @@ export default {
       type: Object,
       required: true,
     },
-    rules: Object,
     labelWidth: {
       type: String,
       default: '100px',
@@ -62,28 +62,6 @@ export default {
         return [1, 2, 3, 4, 6, 8, 12, 24].includes(val)
       },
     },
-  },
-  created() {
-    const setDef = (option) => {
-      if (this.model[option.prop] === undefined) {
-        let def = ''
-        if (option.type === 'checkbox')
-          def = []
-
-        if (option.type === 'switch')
-          def = false
-
-        if (['select', 'treeselect'].includes(option.type))
-          def = option.props.multiple ? [] : ''
-
-        this.$set(this.model, option.prop, def) // For vue2
-      }
-      if (option.next)
-        setDef(option.next(option, this.model))
-    }
-    this.formOptions.forEach((option) => {
-      setDef(option)
-    })
   },
   methods: {
     validate(...arg) {

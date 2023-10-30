@@ -1,6 +1,6 @@
 export const formProps = [
   // 'model',
-  // 'rules',
+  'rules',
   'inline',
   'label-position',
   // 'label-width',
