@@ -65,7 +65,7 @@
             font="400 leading-7" text="14px hex-333333"
           >
             <img class="h-7" :src="pathMap[file.type]" alt="" set="">
-            <LazyTooltip class="max-w-75" :text="file.name" />
+            <LazyTooltip class="max-w-75" :content="file.name" />
             <span>{{ formatSize(file.size) }}</span>
           </div>
           <img

@@ -7,11 +7,11 @@
       v-if="showTooltip"
       class="inline-block w-full truncate"
       v-bind="$attrs"
-      :content="text"
+      :content="content"
     >
-      <span>{{ text }}</span>
+      <span>{{ content }}</span>
     </el-tooltip>
-    <span v-else>{{ text }}</span>
+    <span v-else>{{ content }}</span>
   </div>
 </template>
 
@@ -35,10 +35,7 @@ export default {
   name: 'LazyTooltip',
   inheritAttrs: false,
   props: {
-    text: {
-      type: String,
-      require: true,
-    },
+    content: String,
   },
   data() {
     return {
@@ -46,7 +43,7 @@ export default {
     }
   },
   watch: {
-    async text() {
+    async content() {
       await this.$nextTick()
       this.showTooltip = hasEllipsis(this.$refs.container)
     },
