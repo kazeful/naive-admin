@@ -1,48 +1,20 @@
 <template>
   <div>
     <!-- toolbar -->
-    <div
+    <NTableToolbar
       v-if="showToolbar"
-      flex="~" justify="between" align="items-center"
+      :general-columns="generalColumns"
+      :checked-columns="checkedColumns"
     >
-      <div>
-        <slot name="toolbar-left" />
-      </div>
-      <div>
-        <div v-if="showCustomColumn">
-          <el-dropdown split-button type="primary">
-            自定义列
-            <template #dropdown>
-              <el-dropdown-menu
-                class="max-h-40 overflow-y-auto"
-                p="x-10px"
-              >
-                <el-checkbox
-                  v-model="checkAll"
-                  :indeterminate="isIndeterminate"
-                  @change="handleCheckAll"
-                >
-                  全选
-                </el-checkbox>
-                <el-checkbox-group
-                  v-model="checkedColumns"
-                  flex="~ col"
-                  @change="handleCheckedColumns"
-                >
-                  <el-checkbox v-for="column in generalColumns" :key="column.prop" :label="column.label">
-                    {{ column.label }}
-                  </el-checkbox>
-                </el-checkbox-group>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
-      </div>
-    </div>
+      <template #default>
+        <slot name="toolbar" />
+      </template>
+    </NTableToolbar>
     <!-- elTable -->
     <el-table
       ref="elTable"
       v-loading="loading"
+      :stripe="stripe"
       m="y-4"
       v-bind="$attrs"
       v-on="getElTableListeners()"
@@ -69,35 +41,36 @@
     <!-- elPagination -->
     <el-pagination
       ref="elPagination"
-      :current-page="currentPage"
-      :page-size="pageSize"
+      :current-page.sync="computedCurrentPage"
+      :page-size.sync="computedPageSize"
       :page-sizes="pageSizes"
       :total="total"
       :layout="layout"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      @current-change="$emit('current-change')"
     />
   </div>
 </template>
 
 <script>
 import { constant, omit } from 'lodash-es'
+import NTableToolbar from './NTableToolbar.vue'
 import NTableColumn from './NTableColumn.vue'
 
 export default {
   name: 'NTable',
-  components: { NTableColumn },
+  components: { NTableToolbar, NTableColumn },
   inheritAttrs: false,
   props: {
     showToolbar: {
       type: Boolean,
       default: true,
     },
-    showCustomColumn: {
+    loading: Boolean,
+    stripe: {
       type: Boolean,
       default: true,
     },
-    loading: Boolean,
     columns: {
       type: Array,
       default: constant([]),
@@ -109,6 +82,10 @@ export default {
     pageSize: {
       type: Number,
       default: 10,
+    },
+    resetCurrentWhenSizeChange: {
+      type: Boolean,
+      default: true,
     },
     pageSizes: {
       type: Array,
@@ -125,9 +102,7 @@ export default {
   },
   data() {
     return {
-      checkAll: true,
       checkedColumns: [],
-      isIndeterminate: false,
     }
   },
   computed: {
@@ -140,14 +115,27 @@ export default {
     displayedGeneralColumns() {
       return this.generalColumns.filter(item => this.checkedColumns.includes(item.label))
     },
-    generalColumnsLabel() {
-      return this.generalColumns.map(item => item.label)
-    },
     tableColumns() {
       return [
         ...this.specificColumns,
         ...this.displayedGeneralColumns,
       ]
+    },
+    computedCurrentPage: {
+      get() {
+        return this.currentPage
+      },
+      set(newval) {
+        this.$emit('update:current-page', newval)
+      },
+    },
+    computedPageSize: {
+      get() {
+        return this.pageSize
+      },
+      set(newval) {
+        this.$emit('update:page-size', newval)
+      },
     },
   },
   watch: {
@@ -159,24 +147,10 @@ export default {
     },
   },
   methods: {
-    handleCheckAll(val) {
-      this.checkedColumns = val ? this.generalColumnsLabel : []
-      this.isIndeterminate = false
-    },
-    handleCheckedColumns(value) {
-      const checkedCount = value.length
-      this.checkAll = checkedCount === this.generalColumnsLabel.length
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.generalColumnsLabel.length
-    },
-
-    handleCurrentChange(currentPage) {
-      this.$emit('update:current-page', currentPage)
-      this.$emit('current-change')
-    },
-    handleSizeChange(pageSize) {
-      this.$emit('update:current-page', 1)
-      this.$emit('update:page-size', pageSize)
-      this.$emit('page-size-change')
+    handleSizeChange() {
+      if (this.resetCurrentWhenSizeChange)
+        this.computedCurrentPage = 1
+      this.$emit('size-change')
     },
 
     getElTableListeners() {
@@ -186,7 +160,7 @@ export default {
         'current-change',
         'update:page-size',
         'update:pageSize',
-        'page-size-change',
+        'size-change',
       ]
       return omit(this.$listeners, omitListeners)
     },

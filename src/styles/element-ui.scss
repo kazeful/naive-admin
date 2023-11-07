@@ -14,18 +14,26 @@
   box-sizing: content-box;
 }
 
+.el-checkbox__input {
+  line-height: 2;
+}
+
+.el-table__header thead tr, .el-table__row {
+  height: var(--el-table-row-height, 32px);
+}
+
+.el-table .el-table__cell {
+  padding: 0;
+}
+
 .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
-  background-color: var(--el-even-row-background-color, #f4f4f4);
+  background-color: var(--el-table-even-row-background-color, #f4f4f4);
 }
 
 .el-table th.el-table__cell, .el-table thead.is-group th.el-table__cell {
-  background-color: var(--el-header-background-color, #52cebb);
+  background-color: var(--el-table-header-background-color, #2B79D1);
 }
 
 .el-table thead {
-  color: var(--el-header-cell-color, #fff);
-}
-
-.el-table {
-  color: var(--el-cell-color, #515a6e)
+  color: var(--el-table-header-cell-color, #fff);
 }

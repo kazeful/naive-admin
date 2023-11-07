@@ -1,8 +1,6 @@
 <template>
   <div p="5">
     <NTable
-      height="600"
-      border
       :loading="loading"
       :columns="columns"
       :data="data"
