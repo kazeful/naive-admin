@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "author": "Wind",
   "scripts": {
+    "postinstall": "pnpm link --global naive-directives",
     "build": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
     "dev": "vue-cli-service serve",
@@ -30,8 +31,10 @@
   },
   "devDependencies": {
     "@antfu/eslint-config-basic": "^0.38.4",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0",
     "@vue/cli-plugin-babel": "^4.5.19",
     "@vue/cli-service": "^4.5.19",
+    "body-parser": "^1.20.2",
     "chalk": "~2.4.2",
     "chokidar": "3.5.3",
     "compression-webpack-plugin": "^6.1.1",
