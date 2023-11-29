@@ -14,6 +14,9 @@ dependencies:
   core-js:
     specifier: ^3.30.0
     version: 3.30.0
+  crypto-js:
+    specifier: ^3.3.0
+    version: 3.3.0
   dayjs:
     specifier: ^1.11.7
     version: 1.11.7
@@ -23,6 +26,9 @@ dependencies:
   js-cookie:
     specifier: ~2.2.0
     version: 2.2.0
+  jsencrypt:
+    specifier: ^3.2.1
+    version: 3.3.1
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
@@ -35,6 +41,9 @@ dependencies:
   screenfull:
     specifier: ^5.2.0
     version: 5.2.0
+  sm-crypto:
+    specifier: ^0.3.10
+    version: 0.3.12
   vue:
     specifier: ^2.6.14
     version: 2.6.14
@@ -44,6 +53,9 @@ dependencies:
   vuex:
     specifier: ^3.6.2
     version: 3.6.2(vue@2.6.14)
+  xss:
+    specifier: ^1.0.14
+    version: 1.0.14
 
 devDependencies:
   '@antfu/eslint-config-basic':
@@ -3512,6 +3524,7 @@ packages:
   /color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
     engines: {node: '>=7.0.0'}
+    requiresBuild: true
     dependencies:
       color-name: 1.1.4
     dev: true
@@ -3555,7 +3568,6 @@ packages:
 
   /commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
-    dev: true
 
   /commander@9.3.0:
     resolution: {integrity: sha512-hv95iU5uXPbK83mjrJKuZyFM/LBAoCV/XhVGkS5Je6tl7sxr6A0ITMw5WoRV46/UaJ46Nllm3Xt7IaJhXTIkzw==}
@@ -3978,6 +3990,10 @@ packages:
       randomfill: 1.0.4
     dev: true
 
+  /crypto-js@3.3.0:
+    resolution: {integrity: sha512-DIT51nX0dCfKltpRiXV+/TVZq+Qq2NgF4644+K7Ttnla7zEzqc+kjJyiB96BHNyUTBxyjzRcZYpUdZa+QAqi6Q==}
+    dev: false
+
   /css-color-names@0.0.4:
     resolution: {integrity: sha512-zj5D7X1U2h2zsXOAM8EyUREBnnts6H+Jm+d1M2DbiQQcUtnqgQsMrdo8JW9R80YFUmIdBZeMu5wvYM7hcgWP/Q==}
     dev: true
@@ -4066,6 +4082,10 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
     dev: true
+
+  /cssfilter@0.0.10:
+    resolution: {integrity: sha512-FAaLDaplstoRsDR8XGYH51znUN0UY7nMc6Z9/fvE8EXGwvJE9hu7W2vHwx1+bd6gCYnln9nLbzxFTrcO9YQDZw==}
+    dev: false
 
   /cssnano-preset-default@4.0.8:
     resolution: {integrity: sha512-LdAyHuq+VRyeVREFmuxUZR1TXjQm8QQU/ktoo/x7bz+SdOge1YKc5eMN6pRW7YWBmyq59CqYba1dJ5cUukEjLQ==}
@@ -5837,6 +5857,7 @@ packages:
   /has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dev: true
 
   /has-property-descriptors@1.0.0:
@@ -6725,6 +6746,14 @@ packages:
   /jsbn@0.1.1:
     resolution: {integrity: sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==}
     dev: true
+
+  /jsbn@1.1.0:
+    resolution: {integrity: sha512-4bYVV3aAMtDTTu4+xsDYa6sy9GyJ69/amsu9sYF2zqjiEoZA5xJi3BrfX3uY+/IekIu7MwdObdbDWpoZdBv3/A==}
+    dev: false
+
+  /jsencrypt@3.3.1:
+    resolution: {integrity: sha512-dVvV54GdFuJgmEKn+oBiaifDMen4p6o6j/lJh0OVMcouME8sST0bJ7bldIgKBQk4za0zyGn0/pm4vOznR25mLw==}
+    dev: false
 
   /jsesc@0.5.0:
     resolution: {integrity: sha512-uZz5UnB7u4T9LvwmFqXii7pZSouaRPorGs5who1Ip7VO0wxanFvBL7GkM6dTHlgX+jhBApRetaWpnDabOeTcnA==}
@@ -9296,6 +9325,12 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /sm-crypto@0.3.12:
+    resolution: {integrity: sha512-272PBzB4PYaBdeGa41TH9ZlMGLPVRmS36Gs4FjmHwXIdihQypAbhhFWZTaa/3de69q2KfMme1M5O2W5+spAdrg==}
+    dependencies:
+      jsbn: 1.1.0
+    dev: false
+
   /snapdragon-node@2.1.1:
     resolution: {integrity: sha512-O27l4xaMYt/RSQ5TR3vpWCAB5Kb/czIcqUFOM/C4fYcLnbZUc1PkjTAMjof2pBWaSTwOUd6qUHcFGVGj7aIwnw==}
     engines: {node: '>=0.10.0'}
@@ -10804,6 +10839,15 @@ packages:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}
     engines: {node: '>=12'}
     dev: true
+
+  /xss@1.0.14:
+    resolution: {integrity: sha512-og7TEJhXvn1a7kzZGQ7ETjdQVS2UfZyTlsEdDOqvQF7GoxNfY+0YLCzBy1kPdsDDx4QuNAonQPddpsn6Xl/7sw==}
+    engines: {node: '>= 0.10.0'}
+    hasBin: true
+    dependencies:
+      commander: 2.20.3
+      cssfilter: 0.0.10
+    dev: false
 
   /xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
