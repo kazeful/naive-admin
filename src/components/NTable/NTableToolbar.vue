@@ -6,7 +6,9 @@
     <div flex="~" align="items-center">
       <el-dropdown trigger="click" type="primary">
         <el-tooltip content="自定义列">
-          <SvgIcon text="xl" icon-class="custom-column" />
+          <div>
+            <SvgIcon text="xl" icon-class="custom-column" />
+          </div>
         </el-tooltip>
         <template #dropdown>
           <el-dropdown-menu
@@ -25,9 +27,7 @@
               flex="~ col"
               @change="handleChange"
             >
-              <el-checkbox v-for="column in generalColumns" :key="column.prop" :label="column.label">
-                {{ column.label }}
-              </el-checkbox>
+              <el-checkbox v-for="label in generalColumnsLabel" :key="label" :label="label" />
             </el-checkbox-group>
           </el-dropdown-menu>
         </template>

@@ -2,6 +2,16 @@
 import { isArray, isPlainObject, isString, omitBy } from 'lodash-es'
 import { isEmpty } from '@/utils/is'
 
+export function flatten(arr) {
+  const result = []
+  arr.forEach((item) => {
+    result.push(item)
+    if (item.children?.length)
+      result.push(...flatten(item.children))
+  })
+  return result
+}
+
 export function filterEmpty(val, fn = isEmpty) {
   if (isArray(val))
     return val.filter(fn)

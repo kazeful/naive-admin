@@ -4,7 +4,7 @@
     <NTableToolbar
       v-if="showToolbar"
       :general-columns="generalColumns"
-      :checked-columns="checkedColumns"
+      :checked-columns.sync="checkedColumns"
     >
       <template #default>
         <slot name="toolbar" />
@@ -21,13 +21,14 @@
     >
       <slot />
 
-      <template v-for="column, index in tableColumns">
+      <template v-for="column in columns">
         <el-table-column
-          v-if="column.type === 'selection' || column.type === 'index'"
+          v-if="column.type"
           :key="column.type"
-          v-bind="column" :align="column.align || 'center'"
+          :align="column.align || 'center'"
+          v-bind="column"
         />
-        <NTableColumn v-if="!column.type" :key="index" v-bind="column">
+        <NTableColumn v-else :key="column.prop" v-bind="column">
           <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
             <slot :name="slot" v-bind="scope" />
           </template>
@@ -40,6 +41,7 @@
     </el-table>
     <!-- elPagination -->
     <el-pagination
+      v-if="showPagination"
       ref="elPagination"
       :current-page.sync="computedCurrentPage"
       :page-size.sync="computedPageSize"
@@ -56,6 +58,7 @@
 import { constant, omit } from 'lodash-es'
 import NTableToolbar from './NTableToolbar.vue'
 import NTableColumn from './NTableColumn.vue'
+import { flatten } from '@/utils'
 
 export default {
   name: 'NTable',
@@ -75,6 +78,7 @@ export default {
       type: Array,
       default: constant([]),
     },
+    showPagination: Boolean,
     currentPage: {
       type: Number,
       default: 1,
@@ -106,21 +110,6 @@ export default {
     }
   },
   computed: {
-    specificColumns() {
-      return this.columns.filter(item => item.type === 'index' || item.type === 'selection')
-    },
-    generalColumns() {
-      return this.columns.filter(item => item.type !== 'index' && item.type !== 'selection')
-    },
-    displayedGeneralColumns() {
-      return this.generalColumns.filter(item => this.checkedColumns.includes(item.label))
-    },
-    tableColumns() {
-      return [
-        ...this.specificColumns,
-        ...this.displayedGeneralColumns,
-      ]
-    },
     computedCurrentPage: {
       get() {
         return this.currentPage
@@ -137,13 +126,24 @@ export default {
         this.$emit('update:page-size', newval)
       },
     },
+    specificColumns() {
+      return flatten(this.columns).filter(item => item.type)
+    },
+    generalColumns() {
+      return flatten(this.columns).filter(item => !item.type)
+    },
   },
   watch: {
-    columns: {
-      handler(newVal) {
-        this.checkedColumns = newVal.map(item => item.label)
+    generalColumns: {
+      handler(newval) {
+        this.checkedColumns = newval.map(item => item.label)
       },
       immediate: true,
+    },
+    checkedColumns(newval) {
+      this.generalColumns.forEach((column) => {
+        column.visible = newval.includes(column.label)
+      })
     },
   },
   methods: {

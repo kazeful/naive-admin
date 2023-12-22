@@ -57,10 +57,6 @@ export default {
           label: '标题',
           children: [
             {
-              type: 'selection',
-              reserveSelection: true,
-            },
-            {
               prop: 'pageviews',
               label: '浏览量',
             },
@@ -74,7 +70,7 @@ export default {
       loading: false,
       currentPage: 1,
       pageSize: 10,
-      total: 200,
+      total: 0,
     }
   },
   mounted() {

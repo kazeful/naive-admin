@@ -18,7 +18,7 @@ export default {
     if (scopedSlots[`${column.prop}Header`])
       elTableColumnScopedSlots.header = scope => scopedSlots[`${column.prop}Header`](scope)
 
-    return <el-table-column
+    return (column.visible !== false && <el-table-column
       attrs={{
         ...column,
         align: column.align ?? 'center',
@@ -26,8 +26,8 @@ export default {
       }}
       scopedSlots={elTableColumnScopedSlots}
     >
-      {column.children?.map(column => <NTableColumn attrs={column} scopedSlots={scopedSlots} />)}
-    </el-table-column>
+      {column.children?.map(column => <NTableColumn key={column.prop} attrs={column} scopedSlots={scopedSlots} />)}
+    </el-table-column>)
   },
 }
 </script>
