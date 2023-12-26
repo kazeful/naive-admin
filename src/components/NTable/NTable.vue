@@ -14,7 +14,6 @@
     <el-table
       ref="elTable"
       v-loading="loading"
-      :stripe="stripe"
       m="y-4"
       v-bind="$attrs"
       v-on="getElTableListeners()"
@@ -43,6 +42,7 @@
     <el-pagination
       v-if="showPagination"
       ref="elPagination"
+      text="right"
       :current-page.sync="computedCurrentPage"
       :page-size.sync="computedPageSize"
       :page-sizes="pageSizes"
@@ -70,15 +70,14 @@ export default {
       default: true,
     },
     loading: Boolean,
-    stripe: {
-      type: Boolean,
-      default: true,
-    },
     columns: {
       type: Array,
       default: constant([]),
     },
-    showPagination: Boolean,
+    showPagination: {
+      type: Boolean,
+      default: true,
+    },
     currentPage: {
       type: Number,
       default: 1,
@@ -93,7 +92,7 @@ export default {
     },
     pageSizes: {
       type: Array,
-      default: constant([10, 20, 30, 40, 50]),
+      default: constant([10, 20, 30, 40, 50, 100]),
     },
     total: {
       type: Number,
@@ -126,11 +125,14 @@ export default {
         this.$emit('update:page-size', newval)
       },
     },
+    flatColumns() {
+      return flatten(this.columns)
+    },
     specificColumns() {
-      return flatten(this.columns).filter(item => item.type)
+      return this.flatColumns.filter(item => item.type)
     },
     generalColumns() {
-      return flatten(this.columns).filter(item => !item.type)
+      return this.flatColumns.filter(item => !item.type)
     },
   },
   watch: {
