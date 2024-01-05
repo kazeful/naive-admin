@@ -86,7 +86,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { omitBy, pickBy } from 'lodash-es'
 
 export default {
-  name: 'NFormItem',
+  name: 'NFormValueItem',
   components: {
     Treeselect,
   },

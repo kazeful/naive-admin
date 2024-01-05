@@ -9,8 +9,11 @@ export default {
         if (option.type === 'switch')
           def = false
 
-        if (['select', 'treeselect'].includes(option.type))
+        if (option.type === 'select')
           def = option.props.multiple ? [] : ''
+
+        if (option.type === 'treeselect')
+          def = option.props.multiple ? [] : null
 
         this.$set(this.model, option.prop, def) // For vue2
       }

@@ -17,12 +17,13 @@ export const formProps = [
 export const rowProps = [
   // 'gutter',
   'type',
-  'align',
   'justify',
+  'align',
+  'tag',
 ]
 
 export const colProps = [
-  'span',
+  // 'span',
   'offset',
   'push',
   'pull',
