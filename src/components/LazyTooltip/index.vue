@@ -24,6 +24,8 @@ function hasEllipsis(element) {
   const temp = element.cloneNode(true)
   temp.style.overflow = 'auto'
   const parentNode = element.parentNode
+  if (!parentNode)
+    return false
   // It must be loaded to the parent element, not document.body
   parentNode.appendChild(temp)
   const hasEllipsis = hasHorizontalScrollbar(temp)
@@ -44,6 +46,7 @@ export default {
   },
   watch: {
     async content() {
+      this.showTooltip = false
       await this.$nextTick()
       this.showTooltip = hasEllipsis(this.$refs.container)
     },
