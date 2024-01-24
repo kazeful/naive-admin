@@ -3,16 +3,16 @@ import ElementUI from 'element-ui'
 import '@/styles/element-variables.scss'
 
 import 'windi.css'
-import '@/styles/index.scss' // global scss
-import '@/assets/icons' // global icons
+import '@/styles/index.scss'
+import '@/assets/icons'
 
 import App from './App'
 import store from './store'
 import router from './router'
-import '@/router/permission' // permission control
+import '@/router/permission'
 
-import components from '@/components' // global components
-import directives from '@/directives' // global directives
+import components from '@/components'
+import directives from '@/directives'
 
 Vue.use(ElementUI).use(components).use(directives)
 

@@ -89,14 +89,18 @@ export function hackCss(attr, value) {
 }
 
 /**
- * @description 获取当前元素的左偏移量和顶偏移量
+ * @typedef {object} ViewportOffset
+ * @property {number} left - 文档最左边元素和左边之间的距离
+ * @property {number} top - 元素顶部到文档顶部的距离
+ * @property {number} right - 元素的最右边到文档右边的距离
+ * @property {number} bottom - 元素底部到文档底部的距离
+ * @property {number} rightIncludeBody - 元素的最左边和文档右边之间的距离
+ * @property {number} bottomIncludeBody - 元素的顶部和文档底部之间的距离
+ */
+
+/**
  * @param {HTMLElement} element
- * @returns left: 文档最左边元素和左边之间的距离
- * @returns top: 元素顶部到文档顶部的距离
- * @returns right: 元素的最右边到文档右边的距离
- * @returns bottom: 元素底部到文档底部的距离
- * @returns rightIncludeBody: 元素的最左边和文档右边之间的距离
- * @returns bottomIncludeBody: 元素的顶部和文档底部之间的距离
+ * @returns {ViewportOffset} 一个描述元素相对于视口的偏移量的对象
  */
 export function getViewportOffset(element) {
   const doc = window.document.documentElement

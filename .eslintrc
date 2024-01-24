@@ -73,6 +73,7 @@
     "vue/space-unary-ops": ["error", { "words": true, "nonwords": false }],
     "vue/template-curly-spacing": "error",
 
-    "unicorn/prefer-node-protocol": "off"
+    "unicorn/prefer-node-protocol": "off",
+    "n/prefer-global/process": "off"
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-invalid-this */
 import { isArray, isDate, isFunction, isNull, isPlainObject, isUndefined } from 'lodash-es'
 import { isJson } from './is'
 
@@ -70,7 +71,7 @@ export function cloneDeep(val) {
 export function softBind(fn, obj, ...rest) {
   const bound = function (...arg) {
     return fn.apply(
-      (!this || this === (window || global)) ? obj : this,
+      (!this || this === (window || globalThis)) ? obj : this,
       Array.prototype.concat.apply(rest, arg),
     )
   }
@@ -81,7 +82,7 @@ export function softBind(fn, obj, ...rest) {
 /**
  * @description: 纵向合并单元格
  * @param {Array} data 表格数据
- * @param {Array | String} contentList 需要纵向合并列 依据的字段组成的数组 也可传单个字段字符串
+ * @param {Array | string} contentList 需要纵向合并列 依据的字段组成的数组 也可传单个字段字符串
  * @return {Array} 每行合并的格数组成的数组
  * @author: Wind
  * eg:

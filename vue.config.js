@@ -1,4 +1,5 @@
 const path = require('path')
+const { defineConfig } = require('@vue/cli-service')
 
 const isPro = process.env.NODE_ENV === 'production'
 
@@ -9,7 +10,7 @@ const { jsConfig, externalConfig } = require('./config/cdn')
 // gzip
 const isGZIP = process.env.VUE_APP_GZIP === 'ON'
 
-module.exports = {
+module.exports = defineConfig({
   publicPath: '/',
   assetsDir: 'static',
   lintOnSave: false,
@@ -17,11 +18,7 @@ module.exports = {
   devServer: {
     port: 4396,
     open: true,
-    overlay: {
-      warnings: false,
-      errors: true,
-    },
-    before: require('./mock/mock-server.js'),
+    setupMiddlewares: require('./mock/mock-server.js'),
   },
   chainWebpack(config) {
     config.resolve.alias.set('#', path.resolve('src/views'))
@@ -96,6 +93,11 @@ module.exports = {
   },
   configureWebpack() {
     const config = {
+      resolve: {
+        fallback: {
+          path: require.resolve('path-browserify'),
+        },
+      },
       // https://webpack.js.org/configuration/externals/#externals
       externals: externalConfig,
       plugins: [],
@@ -114,4 +116,4 @@ module.exports = {
     }
     return config
   },
-}
+})

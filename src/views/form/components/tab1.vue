@@ -119,6 +119,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          // eslint-disable-next-line no-alert
           alert('submit!')
         }
         else {

@@ -226,18 +226,15 @@ export default {
       const sleep = delay => new Promise(resolve => setTimeout(resolve, delay))
       const cloneFiles = this.files.slice()
       const tasks = cloneFiles.map((cloneItem, index) => {
-        return () => new Promise((resolve, reject) => {
-          asyncFn()
-          async function asyncFn() {
-            try {
-              const res = await sleep((index + 1) * 500)
-              this.handleDelete(this.files.findIndex(item => item.id === cloneItem.id))
-              resolve(res)
-            }
-            catch (err) {
-              Message.error(`${cloneItem.name}上传出错，请稍后再试`)
-              reject(err)
-            }
+        return () => new Promise(async (resolve, reject) => {
+          try {
+            const res = await sleep((index + 1) * 500)
+            this.handleDelete(this.files.findIndex(item => item.id === cloneItem.id))
+            resolve(res)
+          }
+          catch (err) {
+            Message.error(`${cloneItem.name}上传出错，请稍后再试`)
+            reject(err)
           }
         })
       })

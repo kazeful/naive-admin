@@ -43,7 +43,7 @@ function unregisterRoutes() {
   })
 }
 
-module.exports = (app) => {
+module.exports = (middlewares, { app }) => {
   // parse app.body
   // https://expressjs.com/en/4x/api.html#req.body
   app.use(bodyParser.json())
@@ -83,4 +83,5 @@ module.exports = (app) => {
         }
       }
     })
+  return middlewares
 }

@@ -99,7 +99,7 @@
 
 <script>
 import SwitchRoles from './components/SwitchRoles'
-import { checkPermission } from '@/directives/permission' // 权限判断函数
+import { checkPermission } from '@/directives/permission'
 
 export default {
   name: 'DirectivePermission',
