@@ -3,7 +3,7 @@ import { MessageBox } from 'element-ui'
 import xss from 'xss'
 import JSEncrypt from 'jsencrypt'
 import { isPlainObject } from 'lodash-es'
-import axiosCanceler from './axiosCancel'
+import { axiosCanceler } from './axiosCancel'
 import httpConfig from './httpConfig'
 
 const crypt = new JSEncrypt()

@@ -1,59 +1,57 @@
-import axios from 'axios'
-import { isFunction } from 'lodash-es'
+// 用于存储每个请求的标识和取消函数
+const pendingMap = new Map()
 
-// Used to store the identification and cancellation function of each request
-let pendingMap = new Map()
-
-export function getPendingUrl(config) {
+function getPendingUrl(config) {
   return [config.method, config.url].join('&')
 }
 
-export default class AxiosCanceler {
+export class AxiosCanceler {
   /**
-   * Add request
-   * @param {object} config
+   * 添加请求
+   * @param config 请求配置
    */
   addPending(config) {
     this.removePending(config)
     const url = getPendingUrl(config)
-    config.cancelToken = config.cancelToken || new axios.CancelToken((cancel) => {
-      if (!pendingMap.has(url)) {
-        // If there is no current request in pending, add it
-        pendingMap.set(url, cancel)
-      }
-    })
+    const controller = new AbortController()
+    config.signal = config.signal || controller.signal
+    if (!pendingMap.has(url)) {
+      // 如果当前请求不在等待中，将其添加到等待中
+      pendingMap.set(url, controller)
+    }
   }
 
   /**
-   * @description: Clear all pending
+   * 清除所有等待中的请求
    */
   removeAllPending() {
-    pendingMap.forEach((cancel) => {
-      cancel && isFunction(cancel) && cancel()
+    pendingMap.forEach((abortController) => {
+      if (abortController)
+        abortController.abort()
     })
-    pendingMap.clear()
+    this.reset()
   }
 
   /**
-   * Removal request
-   * @param {object} config
+   * 移除请求
+   * @param config 请求配置
    */
   removePending(config) {
     const url = getPendingUrl(config)
-
     if (pendingMap.has(url)) {
-      // If there is a current request identifier in pending,
-      // the current request needs to be cancelled and removed
-      const cancel = pendingMap.get(url)
-      cancel && cancel(url)
+      // 如果当前请求在等待中，取消它并将其从等待中移除
+      const abortController = pendingMap.get(url)
+      if (abortController)
+        abortController.abort(url)
+
       pendingMap.delete(url)
     }
   }
 
   /**
-   * @description: reset
+   * 重置
    */
   reset() {
-    pendingMap = new Map()
+    pendingMap.clear()
   }
 }
