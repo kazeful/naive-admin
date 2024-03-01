@@ -18,16 +18,18 @@ export default {
     if (scopedSlots[`${column.prop}Header`])
       elTableColumnScopedSlots.header = scope => scopedSlots[`${column.prop}Header`](scope)
 
-    return (column.visible !== false && <el-table-column
-      attrs={{
-        ...column,
-        align: column.align ?? 'center',
-        showOverflowTooltip: column.showOverflowTooltip ?? true,
-      }}
-      scopedSlots={elTableColumnScopedSlots}
-    >
-      {column.children?.map(column => <NTableColumn key={column.prop} attrs={column} scopedSlots={scopedSlots} />)}
-    </el-table-column>)
+    return column.visible !== false && (
+      <el-table-column
+        attrs={{
+          ...column,
+          align: column.align ?? 'center',
+          showOverflowTooltip: column.showOverflowTooltip ?? true,
+        }}
+        scopedSlots={elTableColumnScopedSlots}
+      >
+        {column.children?.map(column => <NTableColumn key={column.prop} attrs={column} scopedSlots={scopedSlots} />)}
+      </el-table-column>
+    )
   },
 }
 </script>

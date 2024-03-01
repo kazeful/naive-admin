@@ -1,4 +1,3 @@
-/* eslint-disable no-invalid-this */
 import { isArray, isDate, isFunction, isNull, isPlainObject, isUndefined } from 'lodash-es'
 import { isJson } from './is'
 
