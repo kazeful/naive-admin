@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 const tinify = require('tinify')
 
 tinify.key = 'Yy368J0ZrP6k7pWw1C35CzgWw13nKHDr'

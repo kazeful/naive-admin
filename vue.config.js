@@ -1,4 +1,5 @@
-const path = require('path')
+const path = require('node:path')
+const process = require('node:process')
 const { defineConfig } = require('@vue/cli-service')
 
 const isPro = process.env.NODE_ENV === 'production'

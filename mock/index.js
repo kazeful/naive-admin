@@ -1,5 +1,5 @@
+const qs = require('node:querystring')
 const Mock = require('mockjs')
-const qs = require('qs')
 
 const user = require('./user')
 const role = require('./role')

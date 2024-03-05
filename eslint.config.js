@@ -20,7 +20,7 @@ module.exports = antfu(
     // Disable jsonc and yaml support
     // jsonc: false,
     yaml: false,
-    toml: false,
+    // toml: false,
   },
   {
     // Without `files`, they are general rules for all files
