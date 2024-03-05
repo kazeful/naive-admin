@@ -1,6 +1,14 @@
 import { isArray, isDate, isFunction, isNull, isPlainObject, isUndefined } from 'lodash-es'
 import { isJson } from './is'
 
+export function compose(...fns) {
+  return fns.reduce((a, b) => (...args) => a(b(...args)))
+}
+
+export function pipe(...fns) {
+  return fns.reduce((a, b) => (...args) => b(a(...args)))
+}
+
 /**
  * 防抖函数
  * 例如 百度输入框一直输入时不会出现返回的列表数据
