@@ -2,6 +2,10 @@
 import { isArray, isPlainObject, isString, omitBy } from 'lodash-es'
 import { isEmpty } from '@/utils/is'
 
+export function sleep(delay) {
+  return new Promise(resolve => setTimeout(resolve, delay))
+}
+
 export function flatten(arr) {
   const result = []
   arr.forEach((item) => {
@@ -46,12 +50,13 @@ export async function errorCapture(asyncFunc) {
 export function asyncParallelLimit(tasks, limit) {
   return new Promise((resolve) => {
     let completedTasks = 0
-    const results = []
+    const results = Array(tasks.length)
+    const arr = tasks.slice()
     const queue = tasks.slice()
 
-    function next(result) {
+    function next(result, index) {
       completedTasks++
-      results.push(result)
+      results[index] = result
 
       if (completedTasks === tasks.length)
         resolve(results)
@@ -62,7 +67,8 @@ export function asyncParallelLimit(tasks, limit) {
     function runTask() {
       if (queue.length) {
         const task = queue.shift()
-        task().then(res => next(res), err => next(err))
+        const index = arr.findIndex(item => item === task)
+        task().then(res => next(res, index), err => next(err, index))
       }
     }
 

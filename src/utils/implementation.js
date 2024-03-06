@@ -1,5 +1,6 @@
 import { isArray, isDate, isFunction, isNull, isPlainObject, isUndefined } from 'lodash-es'
 import { isJson } from './is'
+import { sleep } from '@/utils'
 
 export function compose(...fns) {
   return fns.reduce((a, b) => (...args) => a(b(...args)))
@@ -28,7 +29,6 @@ export function debounce(fn, delay) {
  * 例如 避免在scroll、resize时过于频繁的更新
  */
 export function throttle(fn, interval) {
-  const sleep = delay => new Promise(resolve => setTimeout(resolve, delay))
   let canRun = true
   return async function (...arg) {
     if (!canRun)
