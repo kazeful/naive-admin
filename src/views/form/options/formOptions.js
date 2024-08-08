@@ -1,14 +1,22 @@
+import { Switch } from 'element-ui'
+import { markRaw } from 'vue'
+
 const formOptions = [
   {
-    prop: 'input',
-    label: '输入框',
-    type: 'input',
+    formItem: {
+      prop: 'input',
+      label: '输入框',
+    },
+    // type: 'input',
+    is: 'el-input',
   },
   {
-    prop: 'select',
-    label: '下拉框',
+    formItem: {
+      prop: 'select',
+      label: '下拉框',
+    },
     type: 'select',
-    props: {
+    input: {
       options: [
         {
           label: '区域一',
@@ -23,20 +31,26 @@ const formOptions = [
     },
   },
   {
-    prop: 'customLabel',
-    label: '自定义标签',
+    formItem: {
+      prop: 'customLabel',
+      label: '自定义标签',
+    },
     type: 'input',
   },
   {
-    prop: 'customForm',
-    label: '自定义表单',
+    formItem: {
+      prop: 'customForm',
+      label: '自定义表单',
+    },
     type: 'input',
   },
   {
-    prop: 'radio',
-    label: '单选框',
+    formItem: {
+      prop: 'radio',
+      label: '单选框',
+    },
     type: 'radio',
-    props: {
+    input: {
       options: [
         {
           label: '区域一',
@@ -50,10 +64,12 @@ const formOptions = [
     },
   },
   {
-    prop: 'checkbox',
-    label: '多选框',
+    formItem: {
+      prop: 'checkbox',
+      label: '多选框',
+    },
     type: 'checkbox',
-    props: {
+    input: {
       options: [
         {
           label: '区域一',
@@ -67,10 +83,12 @@ const formOptions = [
     },
   },
   {
-    prop: 'treeselect',
+    formItem: {
+      prop: 'treeselect',
+      label: 'treeselect',
+    },
     type: 'treeselect',
-    label: 'treeselect',
-    props: {
+    input: {
       multiple: true,
       options: [
         {
@@ -99,22 +117,33 @@ const formOptions = [
     },
   },
   {
-    prop: 'switch',
-    type: 'switch',
-    label: '开关',
-    next(self, model) {
+    formItem: {
+      prop: 'switch',
+      label: '开关',
+    },
+    // type: 'switch',
+    is: markRaw(Switch),
+    next(parent, model) {
       return {
-        show: model[self.prop],
-        span: 24,
-        prop: 'textarea',
-        label: '文本域',
+        show: model[parent.formItem.prop],
+        col: {
+          span: 24,
+        },
+        formItem: {
+          prop: 'textarea',
+          label: '文本域',
+        },
         type: 'textarea',
-        next(self, model) {
+        next(parent, model) {
           return {
-            show: model[self.prop] === 'show', // Displays when you enter 'show'
-            span: 24,
-            prop: 'textarea2',
-            label: '文本域',
+            show: model[parent.formItem.prop] === 'show', // Displays when you enter 'show'
+            col: {
+              span: 24,
+            },
+            formItem: {
+              prop: 'textarea2',
+              label: '文本域',
+            },
             type: 'textarea',
           }
         },
@@ -122,9 +151,13 @@ const formOptions = [
     },
   },
   // {
-  //   span: 24,
-  //   prop: 'textarea',
-  //   label: '文本域',
+  //   col: {
+  //     span: 24,
+  //   },
+  //   formItem: {
+  //     prop: 'textarea',
+  //     label: '文本域',
+  //   },
   //   type: 'textarea',
   // },
 ]

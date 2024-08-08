@@ -8,8 +8,8 @@
       <template #customLabel_label>
         自定义标签
       </template>
-      <template #customForm="{ data }">
-        <el-input v-model="model[data.prop]" placeholder="自定义表单" />
+      <template #customForm="{ formItem }">
+        <el-input v-model="model[formItem.prop]" placeholder="自定义表单" />
       </template>
     </NForm>
     {{ model }}

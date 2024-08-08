@@ -35,9 +35,19 @@ export default {
   inheritAttrs: false,
   props: {
     /**
-     * 支持的字段
-     * show/type/initialize/next/props(type对应表单的props/events/class/style)
-     * Col和FormItem组件的props
+     * @typedef {Array<FormOption>} FormOptions
+     * @typedef {object} FormOption
+     * @property {boolean} show - 是否显示表单
+     * @property {string|Component} is - 传入时使用vue内置组件<component is="" />渲染
+     * @property {string} type - 指定预设表单类型 详见NFormValueItem.vue
+     * @property {Function} initialize - 初始化函数，用于一些需要自定义的操作
+     * @property {(parent, model) => FormOption} next - 返回下级表单的函数，主要用于动态表单
+     * @property {object} formItem - el-form-item组件的attributes
+     * @property {object} col - el-col组件的attributes
+     * @property {object} input - 组件的attributes listeners
+     */
+    /**
+     * @type FormOptions
      */
     formOptions: {
       type: Array,
