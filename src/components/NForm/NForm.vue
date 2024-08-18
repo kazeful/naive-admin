@@ -1,15 +1,14 @@
 <template>
   <el-form
     ref="elForm"
-    v-bind="pickByFormProps()"
-    :model="model"
+    v-bind="$attrs"
     :label-width="labelWidth"
     v-on="$listeners"
   >
-    <el-row v-bind="pickByRowProps()" :gutter="gutter">
+    <el-row v-bind="{ gutter: 16, ...rowProps }">
       <NFormItem
         v-for="formOption in formOptions" :key="formOption.prop"
-        :form-option="formOption" :model="model" :columnlayout="columnlayout"
+        :form-option="formOption" :model="$attrs.model" :columnlayout="columnlayout"
       >
         <template v-for="slot in Object.keys($scopedSlots)" #[slot]="scope">
           <slot :name="slot" v-bind="scope" />
@@ -21,8 +20,7 @@
 </template>
 
 <script>
-import { pick } from 'lodash-es'
-import { formProps, rowProps } from './options'
+import { constant } from 'lodash-es'
 import NFormItem from './NFormItem.vue'
 import vue2 from './mixins'
 
@@ -35,7 +33,7 @@ export default {
   inheritAttrs: false,
   props: {
     /**
-     * @typedef {Array<FormOption>} FormOptions
+     * @typedef {FormOption[]} FormOptions
      * @typedef {object} FormOption
      * @property {boolean} show - 是否显示表单
      * @property {string|Component} is - 传入时使用vue内置组件<component is="" />渲染
@@ -53,17 +51,13 @@ export default {
       type: Array,
       required: true,
     },
-    model: {
-      type: Object,
-      required: true,
-    },
     labelWidth: {
       type: String,
-      default: '100px',
+      default: 'auto',
     },
-    gutter: {
-      type: Number,
-      default: 16,
+    rowProps: {
+      type: Object,
+      default: constant({}),
     },
     columnlayout: {
       type: Number,
@@ -75,22 +69,16 @@ export default {
   },
   methods: {
     validate(...arg) {
-      this.$refs.ruleForm.validate(...arg)
+      this.$refs.elForm.validate(...arg)
     },
     validateField(...arg) {
-      this.$refs.ruleForm.validateField(...arg)
+      this.$refs.elForm.validateField(...arg)
     },
     resetFields() {
-      this.$refs.ruleForm.resetFields()
+      this.$refs.elForm.resetFields()
     },
     clearValidate(...arg) {
-      this.$refs.ruleForm.clearValidate(...arg)
-    },
-    pickByFormProps() {
-      return pick(this.$attrs, formProps)
-    },
-    pickByRowProps() {
-      return pick(this.$attrs, rowProps)
+      this.$refs.elForm.clearValidate(...arg)
     },
   },
 }

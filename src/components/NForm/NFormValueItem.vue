@@ -155,14 +155,14 @@ export default {
   },
   watch: {
     formIs() {
-      this.formInitialize && this.formInitialize(this.formOption, this.model)
+      this.formInitialize?.(this.formOption, this.model)
     },
     formType() {
-      this.formInitialize && this.formInitialize(this.formOption, this.model)
+      this.formInitialize?.(this.formOption, this.model)
     },
   },
   created() {
-    this.formInitialize && this.formInitialize(this.formOption, this.model)
+    this.formInitialize?.(this.formOption, this.model)
   },
 }
 </script>

@@ -1,7 +1,7 @@
 export default {
   created() {
     const setDef = (option) => {
-      if (this.model[option.formItem.prop] === undefined) {
+      if (this.$attrs.model[option.formItem.prop] === undefined) {
         let def = ''
         if (option.type === 'checkbox')
           def = []
@@ -15,10 +15,10 @@ export default {
         if (option.type === 'treeselect')
           def = option.input.multiple ? [] : null
 
-        this.$set(this.model, option.formItem.prop, def) // For vue2
+        this.$set(this.$attrs.model, option.formItem.prop, def) // For vue2
       }
       if (option.next)
-        setDef(option.next(option, this.model))
+        setDef(option.next(option, this.$attrs.model))
     }
     this.formOptions.forEach(setDef)
   },
