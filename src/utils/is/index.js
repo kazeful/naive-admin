@@ -58,23 +58,6 @@ export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
 
-// lodash的 isEmpty 不能用于判断基本数据类型 传入 Boolean Number 也会返回true
-export function isEmpty(val) {
-  if (isNumber(val))
-    return val === 0
-
-  if (isString(val) || isArray(val))
-    return val.length === 0
-
-  if (isPlainObject(val))
-    return Object.keys(val).length === 0
-
-  if (isMap(val) || isSet(val))
-    return val.size === 0
-
-  return isNil(val)
-}
-
 export function isVisibleInViewport(el, isFullyVisible) {
   const { top, left, right, bottom } = el.getBoundingClientRect()
   const { innerHeight, innerWidth } = window

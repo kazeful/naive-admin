@@ -13,7 +13,7 @@ export default {
 
     // FIXME not work
     // if (column.children)
-    //   elTableColumnScopedSlots.default = () => column.children.map(column => <NTableColumn attrs={column} scopedSlots={scopedSlots} />)
+    //   elTableColumnScopedSlots.default = () => column.children.map(column => <NTableColumn key={column.prop} attrs={column} scopedSlots={scopedSlots} />)
 
     if (scopedSlots[`${column.prop}Header`])
       elTableColumnScopedSlots.header = scope => scopedSlots[`${column.prop}Header`](scope)

@@ -22,7 +22,7 @@ class HttpRequest {
         const { params, data, headers } = config
         const {
           authenticationScheme = 'Bearer',
-          ignoreCancelToken = false,
+          allowAbort = false,
         } = this.options
         const {
           withToken = true,
@@ -30,7 +30,7 @@ class HttpRequest {
           isEncrypt = true,
         } = config
 
-        !ignoreCancelToken && axiosCanceler.addPending(config)
+        allowAbort && axiosCanceler.addPending(config)
 
         const token = 'getToken()'
         if (token && withToken) {

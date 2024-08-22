@@ -1,6 +1,5 @@
 // 放一些不确定分类的实用函数
-import { isArray, isPlainObject, isString, omitBy } from 'lodash-es'
-import { isEmpty } from '@/utils/is'
+import { isArray, isEmpty, isPlainObject, isString, omitBy } from 'lodash-es'
 
 export function sleep(delay) {
   return new Promise(resolve => setTimeout(resolve, delay))
