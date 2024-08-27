@@ -12,16 +12,16 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0(vue@2.7.16)
       '@vueuse/core':
-        specifier: ^10.7.2
+        specifier: ^10.11.1
         version: 10.11.1(vue@2.7.16)
       axios:
-        specifier: ~1.6.5
+        specifier: ~1.6.8
         version: 1.6.8
       core-js:
-        specifier: ^3.35.1
+        specifier: ^3.38.0
         version: 3.38.0
       dayjs:
-        specifier: ^1.11.10
+        specifier: ^1.11.12
         version: 1.11.12
       element-ui:
         specifier: ^2.15.14
@@ -48,7 +48,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       vue:
-        specifier: ^2.7.15
+        specifier: ^2.7.16
         version: 2.7.16
       vue-router:
         specifier: ^3.6.5
@@ -57,7 +57,7 @@ importers:
         specifier: ^3.6.2
         version: 3.6.2(vue@2.7.16)
       xss:
-        specifier: ^1.0.14
+        specifier: ^1.0.15
         version: 1.0.15
     devDependencies:
       '@antfu/eslint-config':
@@ -82,7 +82,7 @@ importers:
         specifier: ~3.5.3
         version: 3.5.3
       compression-webpack-plugin:
-        specifier: ^11.0.0
+        specifier: ^11.1.0
         version: 11.1.0(webpack@5.93.0(esbuild@0.23.1))
       connect:
         specifier: ^3.7.0
@@ -91,7 +91,7 @@ importers:
         specifier: ^8.57.0
         version: 8.57.0
       eslint-plugin-vue:
-        specifier: ^9.22.0
+        specifier: ^9.27.0
         version: 9.27.0(eslint@8.57.0)
       mockjs:
         specifier: ^1.1.0
@@ -103,7 +103,7 @@ importers:
         specifier: ~1.32.13
         version: 1.32.13
       sass-loader:
-        specifier: ^14.0.0
+        specifier: ^14.2.1
         version: 14.2.1(sass@1.32.13)(webpack@5.93.0(esbuild@0.23.1))
       serve-static:
         specifier: ^1.15.0
@@ -1831,8 +1831,8 @@ packages:
   caniuse-api@3.0.0:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
 
-  caniuse-lite@1.0.30001651:
-    resolution: {integrity: sha512-9Cf+Xv1jJNe1xPZLGuUXLNkE1BoDkqRqYyFJ9TDYSqhduqA4hu4oR9HluGoWYQC/aj8WHjsGVV+bwkh0+tegRg==}
+  caniuse-lite@1.0.30001653:
+    resolution: {integrity: sha512-XGWQVB8wFQ2+9NZwZ10GxTYC5hk0Fa+q8cSkr0tgvMhYhMHP/QC+WTgrePMDBWiWc/pV+1ik82Al20XOK25Gcw==}
 
   case-sensitive-paths-webpack-plugin@2.4.0:
     resolution: {integrity: sha512-roIFONhcxog0JSSWbvVAh3OocukmSgpqOH6YpMkCvav/ySIV3JKg4Dc8vYtQjYi/UxpNE36r/9v+VqTQqgkYmw==}
@@ -4100,6 +4100,9 @@ packages:
   pkg-types@1.1.3:
     resolution: {integrity: sha512-+JrgthZG6m3ckicaOB74TwQ+tBWsFl3qVQg7mN8ulwSOElJ7gBhKzj2VkCPnZ4NlF6kEquYU+RIYNVAvzd54UA==}
 
+  pkg-types@1.2.0:
+    resolution: {integrity: sha512-+ifYuSSqOQ8CqP4MbZA5hDpb97n3E8SVWdJe+Wms9kj745lmd3b7EZJiqvmLwAlmRfjrI7Hi5z3kdBJ93lFNPA==}
+
   pluralize@8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
@@ -5036,8 +5039,8 @@ packages:
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
-  tsx@4.17.0:
-    resolution: {integrity: sha512-eN4mnDA5UMKDt4YZixo9tBioibaMBpoxBkD+rIPAjVmYERSG0/dWEY1CEFuV89CgASlKL499q8AhmkMnnjtOJg==}
+  tsx@4.18.0:
+    resolution: {integrity: sha512-a1jaKBSVQkd6yEc1/NI7G6yHFfefIcuf3QJST7ZEyn4oQnxLYrZR5uZAM8UrwUa3Ge8suiZHcNS1gNrEvmobqg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -7530,7 +7533,7 @@ snapshots:
   autoprefixer@10.4.20(postcss@8.4.41):
     dependencies:
       browserslist: 4.23.3
-      caniuse-lite: 1.0.30001651
+      caniuse-lite: 1.0.30001653
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
@@ -7675,7 +7678,7 @@ snapshots:
 
   browserslist@4.23.3:
     dependencies:
-      caniuse-lite: 1.0.30001651
+      caniuse-lite: 1.0.30001653
       electron-to-chromium: 1.5.8
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
@@ -7735,11 +7738,11 @@ snapshots:
   caniuse-api@3.0.0:
     dependencies:
       browserslist: 4.23.3
-      caniuse-lite: 1.0.30001651
+      caniuse-lite: 1.0.30001653
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
 
-  caniuse-lite@1.0.30001651: {}
+  caniuse-lite@1.0.30001653: {}
 
   case-sensitive-paths-webpack-plugin@2.4.0: {}
 
@@ -9199,8 +9202,8 @@ snapshots:
       jiti: 2.0.0-beta.2
       jiti-v1: jiti@1.21.6
       pathe: 1.1.2
-      pkg-types: 1.1.3
-      tsx: 4.17.0
+      pkg-types: 1.2.0
+      tsx: 4.18.0
     transitivePeerDependencies:
       - supports-color
     optional: true
@@ -10023,6 +10026,13 @@ snapshots:
       confbox: 0.1.7
       mlly: 1.7.1
       pathe: 1.1.2
+
+  pkg-types@1.2.0:
+    dependencies:
+      confbox: 0.1.7
+      mlly: 1.7.1
+      pathe: 1.1.2
+    optional: true
 
   pluralize@8.0.0: {}
 
@@ -11024,7 +11034,7 @@ snapshots:
 
   tslib@2.6.3: {}
 
-  tsx@4.17.0:
+  tsx@4.18.0:
     dependencies:
       esbuild: 0.23.1
       get-tsconfig: 4.7.6
