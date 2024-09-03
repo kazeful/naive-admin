@@ -20,6 +20,12 @@ module.exports = defineConfig({
     port: 4396,
     open: true,
     setupMiddlewares: require('./mock/mock-server.js'),
+    proxy: {
+      '^/demo': {
+        target: 'https://api.vxetable.cn',
+        changeOrigin: true,
+      },
+    },
   },
   chainWebpack(config) {
     config.resolve.alias.set('#', path.resolve('src/views'))

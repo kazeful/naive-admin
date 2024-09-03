@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import '@/styles/element-variables.scss'
+import VxeTable from 'vxe-table'
+import 'vxe-table/lib/style.css'
 
 import 'windi.css'
 import '@/styles/index.scss'
@@ -14,7 +16,7 @@ import '@/router/permission'
 import components from '@/components'
 import directives from '@/directives'
 
-Vue.use(ElementUI).use(components).use(directives)
+Vue.use(VxeTable).use(ElementUI).use(components).use(directives)
 
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('/mock')

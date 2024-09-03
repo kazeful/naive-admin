@@ -6,8 +6,12 @@ import { isPlainObject } from 'lodash-es'
 import { axiosCanceler } from './axiosCancel'
 import httpConfig from './httpConfig'
 
-const crypt = new JSEncrypt()
-crypt.getKey()
+// https://www.npmjs.com/package/jsencrypt
+const encrypt = new JSEncrypt()
+encrypt.setPublicKey('pub_key')
+
+const decrypt = new JSEncrypt()
+decrypt.setPrivateKey('priv_key')
 
 class HttpRequest {
   constructor(options) {
@@ -111,7 +115,7 @@ class HttpRequest {
       for (const key in val) {
         if (Object.hasOwnProperty.call(val, key)) {
           if (isPrimitive(val[key]))
-            val[key] = crypt.encrypt(val[key])
+            val[key] = encrypt.encrypt(val[key])
           else
             this.encryptPrimitiveValuesRecursive(val[key])
         }
@@ -120,7 +124,7 @@ class HttpRequest {
     else if (Array.isArray(val)) {
       val.forEach((v, i) => {
         if (isPrimitive(v))
-          val[i] = crypt.encrypt(v)
+          val[i] = decrypt.encrypt(v)
         else
           this.encryptPrimitiveValuesRecursive(v)
       })
@@ -128,11 +132,11 @@ class HttpRequest {
   }
 
   encrypt(data) {
-    return crypt.encrypt(JSON.stringify(data))
+    return encrypt.encrypt(JSON.stringify(data))
   }
 
   decrypt(data) {
-    return JSON.parse(crypt.decrypt(data))
+    return JSON.parse(decrypt.decrypt(data))
   }
 }
 

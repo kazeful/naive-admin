@@ -164,6 +164,12 @@ const asyncRoutes = [
         meta: { title: 'Table', icon: 'table' },
       },
       {
+        path: 'vxe-table',
+        name: 'VxeTable',
+        component: 'views/vxe-table/index',
+        meta: { title: 'VxeTable', icon: 'table' },
+      },
+      {
         path: 'tree',
         name: 'Tree',
         component: 'views/tree/index',
