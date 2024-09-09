@@ -1,8 +1,9 @@
+import { isPrimitive } from '@/utils/is'
 import axios from 'axios'
 import { MessageBox } from 'element-ui'
-import xss from 'xss'
 import JSEncrypt from 'jsencrypt'
 import { isPlainObject } from 'lodash-es'
+import xss from 'xss'
 import { axiosCanceler } from './axiosCancel'
 import httpConfig from './httpConfig'
 
@@ -108,9 +109,6 @@ class HttpRequest {
   }
 
   encryptPrimitiveValuesRecursive(val) {
-    function isPrimitive(val) {
-      return (typeof val !== 'object' && typeof val !== 'function') || val === null
-    }
     if (isPlainObject(val)) {
       for (const key in val) {
         if (Object.hasOwnProperty.call(val, key)) {

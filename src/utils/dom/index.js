@@ -1,7 +1,7 @@
 import { upperFirst } from 'lodash-es'
 
 function trim(string) {
-  return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '')
+  return (string || '').replace(/^\s+|\s+$/g, '')
 }
 
 export function on(element, event, handler) {

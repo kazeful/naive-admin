@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import XEUtils from 'xe-utils'
 import VXETable from 'vxe-table'
+import XEUtils from 'xe-utils'
 
 export default {
   data() {

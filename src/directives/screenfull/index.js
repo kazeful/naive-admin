@@ -1,5 +1,5 @@
-import screenfull from 'screenfull'
 import { Message } from 'element-ui'
+import screenfull from 'screenfull'
 
 export default {
   bind(el, binding) {

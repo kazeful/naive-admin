@@ -1,7 +1,7 @@
 /* eslint-disable prefer-promise-reject-errors */
 import { getInfo, login, logout } from '@/api/user'
-import { getToken, removeToken, setToken } from '@/utils/cache'
 import router, { resetRouter } from '@/router'
+import { getToken, removeToken, setToken } from '@/utils/cache'
 
 const state = {
   token: getToken(),

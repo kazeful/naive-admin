@@ -21,8 +21,8 @@
 
 <script>
 import { constant } from 'lodash-es'
-import NFormItem from './NFormItem.vue'
 import vue2 from './mixins'
+import NFormItem from './NFormItem.vue'
 
 export default {
   name: 'NForm',

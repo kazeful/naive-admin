@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const process = require('node:process')
-const { run } = require('runjs')
 const chalk = require('chalk')
+const { run } = require('runjs')
 const config = require('../vue.config.js')
 
 const rawArgv = process.argv.slice(2)

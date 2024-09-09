@@ -4,8 +4,7 @@
       v-if="
         hasOneShowingChild(item.children, item)
           && (!onlyOneChild.children || onlyOneChild.noShowingChildren)
-          && !item.alwaysShow
-      "
+          && !item.alwaysShow"
     >
       <AppLink v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item
@@ -39,9 +38,9 @@
 
 <script>
 import path from 'path'
+import { isExternal } from '@/utils/is'
 import Item from './Item.vue'
 import AppLink from './Link.vue'
-import { isExternal } from '@/utils/is'
 
 export default {
   name: 'SidebarItem',

@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/cache'
+import axios from 'axios'
+import { Message, MessageBox } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({

@@ -41,7 +41,8 @@ module.exports = defineConfig({
     config.module
       .rule('icons')
       .test(/\.svg$/)
-      .include.add(path.resolve('src/assets/icons'))
+      .include
+      .add(path.resolve('src/assets/icons'))
       .end()
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')

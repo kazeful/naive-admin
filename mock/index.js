@@ -1,9 +1,9 @@
 const qs = require('node:querystring')
 const Mock = require('mockjs')
 
-const user = require('./user')
 const role = require('./role')
 const table = require('./table')
+const user = require('./user')
 
 const mocks = [...user, ...role, ...table]
 

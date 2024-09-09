@@ -94,9 +94,9 @@
 
 <script>
 import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-
 import { omitBy, pickBy } from 'lodash-es'
+
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 export default {
   name: 'NFormValueItem',

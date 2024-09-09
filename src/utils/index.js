@@ -49,7 +49,7 @@ export async function errorCapture(asyncFunc) {
 export function asyncParallelLimit(tasks, limit) {
   return new Promise((resolve) => {
     let completedTasks = 0
-    const results = Array(tasks.length)
+    const results = Array.from({ length: tasks.length })
     const arr = tasks.slice()
     const queue = tasks.slice()
 

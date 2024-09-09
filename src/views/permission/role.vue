@@ -74,8 +74,8 @@
 
 <script>
 import path from 'path'
-import { cloneDeep } from 'lodash-es'
 import { addRole, deleteRole, getRoles, getRoutes, updateRole } from '@/api/role'
+import { cloneDeep } from 'lodash-es'
 
 const defaultRole = {
   key: '',

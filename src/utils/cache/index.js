@@ -18,4 +18,4 @@ export function createSessionStorage() {
   return sessionInstance
 }
 
-export { getToken, setToken, removeToken } from './token'
+export { getToken, removeToken, setToken } from './token'

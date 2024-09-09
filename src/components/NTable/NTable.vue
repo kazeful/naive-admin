@@ -55,10 +55,10 @@
 </template>
 
 <script>
-import { constant, omit } from 'lodash-es'
-import NTableToolbar from './NTableToolbar.vue'
-import NTableColumn from './NTableColumn.vue'
 import { flatten } from '@/utils'
+import { constant, omit } from 'lodash-es'
+import NTableColumn from './NTableColumn.vue'
+import NTableToolbar from './NTableToolbar.vue'
 
 export default {
   name: 'NTable',

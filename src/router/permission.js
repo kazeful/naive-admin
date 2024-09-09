@@ -1,9 +1,9 @@
-import router from '.'
 import store from '@/store'
+import { getToken } from '@/utils/cache'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress'
+import router from '.'
 import 'nprogress/nprogress.css'
-import { getToken } from '@/utils/cache'
 import defaultSettings from '/config/settings'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration

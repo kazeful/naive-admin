@@ -1,5 +1,5 @@
-import SvgIcon from './SvgIcon'
 import LazyTooltip from './LazyTooltip'
+import SvgIcon from './SvgIcon'
 
 const components = { SvgIcon, LazyTooltip }
 

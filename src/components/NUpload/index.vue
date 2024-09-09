@@ -104,17 +104,16 @@
 </template>
 
 <script>
-import { Message } from 'element-ui'
-import { getFilesAsync } from './helper'
-
 import doc from '@/assets/images/doc.png'
-import xls from '@/assets/images/xls.png'
 import jpg from '@/assets/images/jpg.png'
-import png from '@/assets/images/png.png'
 import pdf from '@/assets/images/pdf.png'
+import png from '@/assets/images/png.png'
 import rar from '@/assets/images/rar.png'
+import xls from '@/assets/images/xls.png'
 import zip from '@/assets/images/zip.png'
 import { asyncParallelLimit } from '@/utils'
+import { Message } from 'element-ui'
+import { getFilesAsync } from './helper'
 
 export default {
   props: {
@@ -231,7 +230,8 @@ export default {
             .then((res) => {
               this.handleDelete(this.files.findIndex(item => item.id === cloneItem.id))
               resolve(res)
-            }).catch((err) => {
+            })
+            .catch((err) => {
               Message.error(`${cloneItem.name}上传出错，请稍后再试`)
               reject(err)
             })

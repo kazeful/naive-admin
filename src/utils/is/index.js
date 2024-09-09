@@ -1,15 +1,4 @@
-import {
-  isArray,
-  isFunction,
-  isMap,
-  isNil,
-  isNumber,
-  isObject,
-  isPlainObject,
-  isSet,
-  isString,
-  isUndefined as isUnDef,
-} from 'lodash-es'
+import { isFunction, isObject, isUndefined as isUnDef } from 'lodash-es'
 
 export const isServer = typeof window === 'undefined'
 
@@ -55,7 +44,7 @@ export function isJson(val) {
 }
 
 export function isExternal(path) {
-  return /^(https?:|mailto:|tel:)/.test(path)
+  return /^https?:|^mailto:|^tel:/.test(path)
 }
 
 export function isVisibleInViewport(el, isFullyVisible) {

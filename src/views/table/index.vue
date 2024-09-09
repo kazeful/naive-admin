@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import { noop } from 'lodash-es'
 import { getList } from '@/api/table'
 import NTable from '@/components/NTable'
+import { noop } from 'lodash-es'
 
 export default {
   components: {

@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import { formOptions, model } from '../options/formOptions'
 import NForm from '@/components/NForm'
+import { formOptions, model } from '../options/formOptions'
 
 export default {
   components: {

@@ -98,8 +98,8 @@
 </template>
 
 <script>
-import SwitchRoles from './components/SwitchRoles'
 import { checkPermission } from '@/directives/permission'
+import SwitchRoles from './components/SwitchRoles'
 
 export default {
   name: 'DirectivePermission',

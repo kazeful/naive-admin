@@ -57,11 +57,11 @@
 </template>
 
 <script>
+import screenfull from '@/directives/screenfull'
 import { mapGetters } from 'vuex'
 import Breadcrumb from './components/Breadcrumb.vue'
 import Hamburger from './components/Hamburger.vue'
 import Settings from './components/Settings.vue'
-import screenfull from '@/directives/screenfull'
 
 export default {
   directives: {

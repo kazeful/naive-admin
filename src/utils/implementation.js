@@ -1,6 +1,6 @@
+import { sleep } from '@/utils'
 import { isArray, isDate, isFunction, isNull, isPlainObject, isUndefined } from 'lodash-es'
 import { isJson } from './is'
-import { sleep } from '@/utils'
 
 export function compose(...fns) {
   return fns.reduce((a, b) => (...args) => a(b(...args)))
