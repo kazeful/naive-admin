@@ -34,8 +34,13 @@
         </NTableColumn>
       </template>
 
+      <slot name="tail" />
+
       <template #append>
         <slot name="append" />
+      </template>
+      <template #empty>
+        <slot name="empty" />
       </template>
     </el-table>
     <!-- elPagination -->
@@ -65,10 +70,7 @@ export default {
   components: { NTableToolbar, NTableColumn },
   inheritAttrs: false,
   props: {
-    showToolbar: {
-      type: Boolean,
-      default: true,
-    },
+    showToolbar: Boolean,
     loading: Boolean,
     columns: {
       type: Array,
