@@ -5,9 +5,14 @@
       v-if="showToolbar"
       :general-columns="generalColumns"
       :checked-columns.sync="checkedColumns"
+      :show-export-excel="showExportExcel"
+      :show-full-screen="showFullScreen"
     >
-      <template #default>
-        <slot name="toolbar" />
+      <template #buttons>
+        <slot name="buttons" />
+      </template>
+      <template #tools>
+        <slot name="tools" />
       </template>
     </NTableToolbar>
     <!-- elTable -->
@@ -34,8 +39,14 @@
         </NTableColumn>
       </template>
 
+      <slot name="tail" />
+
       <template #append>
         <slot name="append" />
+      </template>
+
+      <template #empty>
+        <slot name="empty" />
       </template>
     </el-table>
     <!-- elPagination -->
@@ -48,8 +59,8 @@
       :page-sizes="pageSizes"
       :total="total"
       :layout="layout"
+      @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
-      @current-change="$emit('current-change')"
     />
   </div>
 </template>
@@ -69,6 +80,8 @@ export default {
       type: Boolean,
       default: true,
     },
+    showExportExcel: Boolean,
+    showFullScreen: Boolean,
     loading: Boolean,
     columns: {
       type: Array,
@@ -92,7 +105,7 @@ export default {
     },
     pageSizes: {
       type: Array,
-      default: constant([10, 20, 30, 40, 50, 100]),
+      default: constant([10, 20, 30, 40, 50]),
     },
     total: {
       type: Number,
@@ -149,6 +162,9 @@ export default {
     },
   },
   methods: {
+    handleCurrentChange() {
+      this.$emit('current-change')
+    },
     handleSizeChange() {
       if (this.resetCurrentWhenSizeChange)
         this.computedCurrentPage = 1

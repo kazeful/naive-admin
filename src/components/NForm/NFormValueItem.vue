@@ -70,7 +70,6 @@
     <el-checkbox
       v-for="item in formOption.input.options"
       :key="item[valueField]"
-      :type="item.prop"
       :label="item[valueField]"
     >
       {{ item[labelField] }}

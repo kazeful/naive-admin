@@ -17,8 +17,12 @@ export default {
 
         this.$set(this.$attrs.model, option.formItem.prop, def) // For vue2
       }
-      if (option.next)
-        setDef(option.next(option, this.$attrs.model))
+
+      if (option.children?.length) {
+        option.children.forEach((child) => {
+          setDef(typeof child === 'function' ? child(option, this.$attrs.model) : child)
+        })
+      }
     }
     this.formOptions.forEach(setDef)
   },

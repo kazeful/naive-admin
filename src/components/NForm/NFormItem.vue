@@ -7,23 +7,44 @@ export default {
   props: {
     formOption: Object,
     model: Object,
-    columnlayout: Number,
+    defaultColSpan: Number,
   },
   render(h, { props, scopedSlots: rootScopedSlots }) {
-    const { formOption, model, columnlayout } = props
+    const { formOption, model, defaultColSpan } = props
 
     const { formItem, col } = formOption
 
     const scopedSlots = {
       label: () => rootScopedSlots[`${formItem.prop}_label`] && rootScopedSlots[`${formItem.prop}_label`](formOption),
-      default: () => rootScopedSlots[formItem.prop] ? rootScopedSlots[formItem.prop](formOption) : h(NFormValueItem, { props: { model, formOption } }),
+      default: () =>
+        rootScopedSlots[formItem.prop]
+          ? rootScopedSlots[formItem.prop](formOption)
+          : h(NFormValueItem, { props: { model, formOption } }),
     }
 
-    return [
-      formOption.show !== false
-      && h('el-col', { props: { ...col, span: col?.span || 24 / columnlayout } }, [h('el-form-item', { props: { ...formItem }, scopedSlots })]),
-      formOption.next && h('NFormItem', { props: { formOption: formOption.next(formOption, model), model, columnlayout }, scopedSlots: rootScopedSlots }),
-    ]
+    return (
+      formOption.if !== false && [
+        h(
+          'el-col',
+          {
+            props: { ...col, span: col?.span ?? defaultColSpan },
+            style: { display: formOption.show !== false ? 'initial' : 'none' },
+          },
+          [h('el-form-item', { props: { ...formItem }, scopedSlots, key: formItem.prop })]
+        ),
+        formOption.children?.length &&
+          formOption.children.map((child) =>
+            h('NFormItem', {
+              props: {
+                formOption: typeof child === 'function' ? child(formOption, model) : child,
+                model,
+                defaultColSpan,
+              },
+              scopedSlots: rootScopedSlots,
+            })
+          ),
+      ]
+    )
   },
 }
 </script>
