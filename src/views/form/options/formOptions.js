@@ -123,32 +123,36 @@ const formOptions = [
     },
     // type: 'switch',
     is: markRaw(Switch),
-    next(parent, model) {
-      return {
-        show: model[parent.formItem.prop],
-        col: {
-          span: 24,
-        },
-        formItem: {
-          prop: 'textarea',
-          label: '文本域',
-        },
-        type: 'textarea',
-        next(parent, model) {
-          return {
-            show: model[parent.formItem.prop] === 'show', // Displays when you enter 'show'
-            col: {
-              span: 24,
+    children: [
+      (parent, model) => {
+        return {
+          show: model[parent.formItem.prop],
+          col: {
+            span: 24,
+          },
+          formItem: {
+            prop: 'textarea',
+            label: '文本域',
+          },
+          type: 'textarea',
+          children: [
+            (parent, model) => {
+              return {
+                show: model[parent.formItem.prop] === 'show', // Displays when you enter 'show'
+                col: {
+                  span: 24,
+                },
+                formItem: {
+                  prop: 'textarea2',
+                  label: '文本域',
+                },
+                type: 'textarea',
+              }
             },
-            formItem: {
-              prop: 'textarea2',
-              label: '文本域',
-            },
-            type: 'textarea',
-          }
-        },
-      }
-    },
+          ],
+        }
+      },
+    ],
   },
   // {
   //   col: {

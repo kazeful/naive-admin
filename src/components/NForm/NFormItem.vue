@@ -24,25 +24,23 @@ export default {
 
     return (
       formOption.if !== false && [
-        h(
-          'el-col',
-          {
-            props: { ...col, span: col?.span ?? defaultColSpan },
-            style: { display: formOption.show !== false ? 'initial' : 'none' },
-          },
-          [h('el-form-item', { props: { ...formItem }, scopedSlots, key: formItem.prop })]
-        ),
-        formOption.children?.length &&
-          formOption.children.map((child) =>
-            h('NFormItem', {
-              props: {
-                formOption: typeof child === 'function' ? child(formOption, model) : child,
-                model,
-                defaultColSpan,
-              },
-              scopedSlots: rootScopedSlots,
-            })
-          ),
+        <el-col
+          props={{ ...col, span: col?.span ?? defaultColSpan }}
+          style={{ display: formOption.show !== false ? null : 'none' }}
+        >
+          <el-form-item key={formItem.prop} props={{ ...formItem }} scopedSlots={scopedSlots} />
+        </el-col>,
+        formOption.children?.length
+        && formOption.children.map(child => (
+          <NFormItem
+            props={{
+              formOption: typeof child === 'function' ? child(formOption, model) : child,
+              model,
+              defaultColSpan,
+            }}
+            scopedSlots={rootScopedSlots}
+          />
+        )),
       ]
     )
   },
